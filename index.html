@@ -2127,60 +2127,48 @@ body {
 </footer>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+<script>
+  // Intersection observer for reveal animations
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold: 0.05 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+
+  var LIVE_DATA = {"generated": "03/09/26 Live", "stats": {"total": 227, "wins": 50, "losses": 177, "win_rate": 22.0, "peak": 165059.07, "current": 156999.17, "roi": 57.0}, "bankroll_curve": [{"date": "2025-12-31", "value": 100000}, {"date": "2025-12-31", "value": 98639.81}, {"date": "2025-12-31", "value": 96547.03}, {"date": "2026-01-01", "value": 100310.47}, {"date": "2026-01-01", "value": 108063.63}, {"date": "2026-01-01", "value": 103943.66}, {"date": "2026-01-01", "value": 107707.1}, {"date": "2026-01-02", "value": 106241.5}, {"date": "2026-01-03", "value": 109036.53}, {"date": "2026-01-10", "value": 107361.18}, {"date": "2026-01-10", "value": 114504.04}, {"date": "2026-01-11", "value": 112232.46}, {"date": "2026-01-18", "value": 117703.6}, {"date": "2026-01-18", "value": 121018.52}, {"date": "2026-01-20", "value": 119105.25}, {"date": "2026-01-20", "value": 116657.27}, {"date": "2026-01-21", "value": 119724.75}, {"date": "2026-01-22", "value": 118513.51}, {"date": "2026-01-24", "value": 117908.78}, {"date": "2026-01-24", "value": 126287.93}, {"date": "2026-01-24", "value": 125791.67}, {"date": "2026-01-25", "value": 125350.64}, {"date": "2026-01-25", "value": 130038.13}, {"date": "2026-01-25", "value": 129236.92}, {"date": "2026-01-27", "value": 128297.34}, {"date": "2026-01-27", "value": 127441.18}, {"date": "2026-01-27", "value": 126749.26}, {"date": "2026-01-28", "value": 121487.11}, {"date": "2026-01-28", "value": 119931.01}, {"date": "2026-01-29", "value": 122650.67}, {"date": "2026-01-29", "value": 125135.14}, {"date": "2026-01-29", "value": 122380.32}, {"date": "2026-01-30", "value": 127745.6}, {"date": "2026-01-30", "value": 127321.87}, {"date": "2026-01-30", "value": 125552.41}, {"date": "2026-01-30", "value": 123980.08}, {"date": "2026-01-30", "value": 117491.84}, {"date": "2026-01-30", "value": 121189.01}, {"date": "2026-01-31", "value": 117216.38}, {"date": "2026-01-31", "value": 123362.04}, {"date": "2026-01-31", "value": 122941.46}, {"date": "2026-01-31", "value": 122272.13}, {"date": "2026-01-31", "value": 121708.54}, {"date": "2026-01-31", "value": 120732.85}, {"date": "2026-01-31", "value": 119907.21}, {"date": "2026-02-01", "value": 117894.33}, {"date": "2026-02-01", "value": 116301.02}, {"date": "2026-02-01", "value": 114973.86}, {"date": "2026-02-01", "value": 112118.92}, {"date": "2026-02-01", "value": 118328.78}, {"date": "2026-02-01", "value": 117881.35}, {"date": "2026-02-02", "value": 117269.05}, {"date": "2026-02-04", "value": 115807.06}, {"date": "2026-02-05", "value": 115303.77}, {"date": "2026-02-05", "value": 114227.09}, {"date": "2026-02-05", "value": 113204.55}, {"date": "2026-02-05", "value": 112093.44}, {"date": "2026-02-05", "value": 111717.92}, {"date": "2026-02-05", "value": 121140.72}, {"date": "2026-02-06", "value": 120292.22}, {"date": "2026-02-06", "value": 119420.43}, {"date": "2026-02-06", "value": 118637.79}, {"date": "2026-02-06", "value": 117390.09}, {"date": "2026-02-06", "value": 116899.03}, {"date": "2026-02-07", "value": 116049.29}, {"date": "2026-02-07", "value": 117299.29}, {"date": "2026-02-07", "value": 118549.29}, {"date": "2026-02-07", "value": 117785.57}, {"date": "2026-02-07", "value": 116847.72}, {"date": "2026-02-07", "value": 115391.15}, {"date": "2026-02-07", "value": 114686.71}, {"date": "2026-02-07", "value": 114254.29}, {"date": "2026-02-07", "value": 113821.87}, {"date": "2026-02-07", "value": 112442.06}, {"date": "2026-02-07", "value": 115181.79}, {"date": "2026-02-07", "value": 113749.02}, {"date": "2026-02-07", "value": 121441.32}, {"date": "2026-02-07", "value": 120833.3}, {"date": "2026-02-07", "value": 119376.42}, {"date": "2026-02-07", "value": 118585.19}, {"date": "2026-02-07", "value": 118138.0}, {"date": "2026-02-07", "value": 123386.6}, {"date": "2026-02-08", "value": 121942.44}, {"date": "2026-02-08", "value": 121298.02}, {"date": "2026-02-08", "value": 126677.77}, {"date": "2026-02-10", "value": 126181.51}, {"date": "2026-02-10", "value": 131402.41}, {"date": "2026-02-11", "value": 133611.24}, {"date": "2026-02-11", "value": 130127.96}, {"date": "2026-02-11", "value": 129423.61}, {"date": "2026-02-11", "value": 128918.55}, {"date": "2026-02-11", "value": 128310.24}, {"date": "2026-02-11", "value": 127762.77}, {"date": "2026-02-11", "value": 127249.43}, {"date": "2026-02-11", "value": 126508.69}, {"date": "2026-02-11", "value": 125561.72}, {"date": "2026-02-13", "value": 124958.65}, {"date": "2026-02-13", "value": 123943.11}, {"date": "2026-02-13", "value": 119911.87}, {"date": "2026-02-13", "value": 119201.44}, {"date": "2026-02-14", "value": 118725.25}, {"date": "2026-02-14", "value": 117881.93}, {"date": "2026-02-14", "value": 117172.49}, {"date": "2026-02-14", "value": 116486.14}, {"date": "2026-02-14", "value": 119145.71}, {"date": "2026-02-14", "value": 118567.13}, {"date": "2026-02-15", "value": 117820.86}, {"date": "2026-02-15", "value": 120384.96}, {"date": "2026-02-15", "value": 122718.29}, {"date": "2026-02-15", "value": 118985.31}, {"date": "2026-02-15", "value": 123499.2}, {"date": "2026-02-15", "value": 120712.13}, {"date": "2026-02-15", "value": 122101.02}, {"date": "2026-02-16", "value": 125355.46}, {"date": "2026-02-17", "value": 124996.85}, {"date": "2026-02-17", "value": 124638.24}, {"date": "2026-02-18", "value": 124000.31}, {"date": "2026-02-18", "value": 127640.16}, {"date": "2026-02-19", "value": 125558.14}, {"date": "2026-02-19", "value": 129445.06}, {"date": "2026-02-19", "value": 127709.36}, {"date": "2026-02-19", "value": 133534.59}, {"date": "2026-02-19", "value": 141312.39}, {"date": "2026-02-19", "value": 140064.23}, {"date": "2026-02-19", "value": 139027.47}, {"date": "2026-02-20", "value": 138403.35}, {"date": "2026-02-20", "value": 136706.52}, {"date": "2026-02-20", "value": 135066.41}, {"date": "2026-02-20", "value": 133959.6}, {"date": "2026-02-20", "value": 137869.07}, {"date": "2026-02-20", "value": 136819.35}, {"date": "2026-02-21", "value": 136423.08}, {"date": "2026-02-21", "value": 135856.28}, {"date": "2026-02-21", "value": 135165.67}, {"date": "2026-02-21", "value": 134541.45}, {"date": "2026-02-21", "value": 133997.18}, {"date": "2026-02-21", "value": 133322.97}, {"date": "2026-02-22", "value": 132038.32}, {"date": "2026-02-25", "value": 131382.57}, {"date": "2026-02-25", "value": 138281.56}, {"date": "2026-02-25", "value": 136129.66}, {"date": "2026-02-25", "value": 135682.6}, {"date": "2026-02-25", "value": 139069.06}, {"date": "2026-02-25", "value": 138399.84}, {"date": "2026-02-26", "value": 137853.97}, {"date": "2026-02-26", "value": 137363.3}, {"date": "2026-02-26", "value": 136766.01}, {"date": "2026-02-26", "value": 136022.75}, {"date": "2026-02-27", "value": 134100.96}, {"date": "2026-02-27", "value": 133606.12}, {"date": "2026-02-27", "value": 132650.65}, {"date": "2026-02-28", "value": 132206.84}, {"date": "2026-02-28", "value": 131272.98}, {"date": "2026-02-28", "value": 130678.9}, {"date": "2026-02-28", "value": 130188.7}, {"date": "2026-02-28", "value": 127941.67}, {"date": "2026-02-28", "value": 133766.91}, {"date": "2026-02-28", "value": 132026.24}, {"date": "2026-02-28", "value": 130524.47}, {"date": "2026-02-28", "value": 129939.42}, {"date": "2026-02-28", "value": 129319.55}, {"date": "2026-02-28", "value": 129057.23}, {"date": "2026-02-28", "value": 124558.8}, {"date": "2026-02-28", "value": 124296.48}, {"date": "2026-02-28", "value": 127461.04}, {"date": "2026-02-28", "value": 126322.02}, {"date": "2026-02-28", "value": 124787.53}, {"date": "2026-02-28", "value": 134089.83}, {"date": "2026-03-01", "value": 132909.58}, {"date": "2026-03-01", "value": 132349.66}, {"date": "2026-03-01", "value": 130811.11}, {"date": "2026-03-01", "value": 125916.01}, {"date": "2026-03-01", "value": 125218.63}, {"date": "2026-03-01", "value": 124651.83}, {"date": "2026-03-03", "value": 124255.56}, {"date": "2026-03-04", "value": 123329.63}, {"date": "2026-03-04", "value": 122688.6}, {"date": "2026-03-04", "value": 121762.19}, {"date": "2026-03-04", "value": 121354.26}, {"date": "2026-03-04", "value": 120946.33}, {"date": "2026-03-04", "value": 120502.52}, {"date": "2026-03-04", "value": 120046.02}, {"date": "2026-03-05", "value": 113635.76}, {"date": "2026-03-05", "value": 112545.18}, {"date": "2026-03-05", "value": 111810.34}, {"date": "2026-03-06", "value": 110241.71}, {"date": "2026-03-06", "value": 109624.43}, {"date": "2026-03-06", "value": 108759.05}, {"date": "2026-03-06", "value": 106746.47}, {"date": "2026-03-06", "value": 106149.18}, {"date": "2026-03-07", "value": 105238.34}, {"date": "2026-03-07", "value": 104311.71}, {"date": "2026-03-07", "value": 103472.69}, {"date": "2026-03-07", "value": 102427.67}, {"date": "2026-03-07", "value": 98834.43}, {"date": "2026-03-07", "value": 107507.88}, {"date": "2026-03-07", "value": 106885.72}, {"date": "2026-03-07", "value": 106267.72}, {"date": "2026-03-07", "value": 105804.76}, {"date": "2026-03-07", "value": 105341.8}, {"date": "2026-03-08", "value": 103695.4}, {"date": "2026-03-08", "value": 101630.82}, {"date": "2026-03-08", "value": 100498.42}, {"date": "2026-03-08", "value": 99125.29}, {"date": "2026-03-08", "value": 97992.89}, {"date": "2026-03-08", "value": 96321.06}, {"date": "2026-03-08", "value": 95617.84}, {"date": "2026-03-08", "value": 93401.2}, {"date": "2026-03-08", "value": 80529.79}, {"date": "2026-03-08", "value": 75130.6}, {"date": "2026-03-08", "value": 67132.59}, {"date": "2026-03-08", "value": 77484.76}, {"date": "2026-03-08", "value": 72996.96}, {"date": "2026-03-08", "value": 92208.59}, {"date": "2026-03-08", "value": 115410.39}, {"date": "2026-03-08", "value": 112215.89}, {"date": "2026-03-08", "value": 108507.37}, {"date": "2026-03-08", "value": 100319.98}, {"date": "2026-03-08", "value": 114108.3}, {"date": "2026-03-08", "value": 109384.54}, {"date": "2026-03-08", "value": 118289.65}, {"date": "2026-03-08", "value": 117078.82}, {"date": "2026-03-08", "value": 135961.21}, {"date": "2026-03-08", "value": 152383.12}, {"date": "2026-03-08", "value": 165059.07}, {"date": "2026-03-08", "value": 160076.34}, {"date": "2026-03-08", "value": 158088.03}, {"date": "2026-03-09", "value": 156999.17}], "last_10_bets": [{"date": "03/09/26", "team": "North Dakota Fighting Hawks", "book": "LowVig.ag", "odds": "+476", "sport": "NCAAB", "result": "L"}, {"date": "03/08/26", "team": "Loyola Marymount Lions", "book": "Bovada", "odds": "+700", "sport": "CBALL", "result": "L"}, {"date": "03/08/26", "team": "Western Carolina Catamounts", "book": "LowVig.ag", "odds": "+140", "sport": "NCAAB", "result": "L"}, {"date": "03/08/26", "team": "East Tennessee St Buccaneers", "book": "FanDuel", "odds": "+122", "sport": "NCAAB", "result": "W"}, {"date": "03/08/26", "team": "CSU Northridge Matadors", "book": "FanDuel", "odds": "+459", "sport": "CBALL", "result": "W"}, {"date": "03/08/26", "team": "Northern Kentucky Norse", "book": "FanDuel", "odds": "+124", "sport": "NCAAB", "result": "W"}, {"date": "03/08/26", "team": "Maryland Terrapins", "book": "BetRivers", "odds": "+650", "sport": "NCAAB", "result": "L"}, {"date": "03/08/26", "team": "Monmouth Hawks", "book": "Bovada", "odds": "+110", "sport": "NCAAB", "result": "W"}, {"date": "03/08/26", "team": "Drexel Dragons", "book": "FanDuel", "odds": "+125", "sport": "NCAAB", "result": "L"}, {"date": "03/08/26", "team": "UAB Blazers", "book": "DraftKings", "odds": "+135", "sport": "NCAAB", "result": "W"}]};
+  var FALLBACK = [100000, 98639.81, 96547.03, 100310.47, 108063.63, 103943.66, 107707.1, 106241.5, 109036.53, 107361.18, 114504.04, 112232.46, 117703.6, 121018.52, 119105.25, 116657.27, 119724.75, 118513.51, 117908.78, 126287.93, 125791.67, 125350.64, 130038.13, 129236.92, 128297.34, 127441.18, 126749.26, 121487.11, 119931.01, 122650.67, 125135.14, 122380.32, 127745.6, 127321.87, 125552.41, 123980.08, 117491.84, 121189.01, 117216.38, 123362.04, 122941.46, 122272.13, 121708.54, 120732.85, 119907.21, 117894.33, 116301.02, 114973.86, 112118.92, 118328.78, 117881.35, 117269.05, 115807.06, 115303.77, 114227.09, 113204.55, 112093.44, 111717.92, 121140.72, 120292.22, 119420.43, 118637.79, 117390.09, 116899.03, 116049.29, 117299.29, 118549.29, 117785.57, 116847.72, 115391.15, 114686.71, 114254.29, 113821.87, 112442.06, 115181.79, 113749.02, 121441.32, 120833.3, 119376.42, 118585.19, 118138.0, 123386.6, 121942.44, 121298.02, 126677.77, 126181.51, 131402.41, 133611.24, 130127.96, 129423.61, 128918.55, 128310.24, 127762.77, 127249.43, 126508.69, 125561.72, 124958.65, 123943.11, 119911.87, 119201.44, 118725.25, 117881.93, 117172.49, 116486.14, 119145.71, 118567.13, 117820.86, 120384.96, 122718.29, 118985.31, 123499.2, 120712.13, 122101.02, 125355.46, 124996.85, 124638.24, 124000.31, 127640.16, 125558.14, 129445.06, 127709.36, 133534.59, 141312.39, 140064.23, 139027.47, 138403.35, 136706.52, 135066.41, 133959.6, 137869.07, 136819.35, 136423.08, 135856.28, 135165.67, 134541.45, 133997.18, 133322.97, 132038.32, 131382.57, 138281.56, 136129.66, 135682.6, 139069.06, 138399.84, 137853.97, 137363.3, 136766.01, 136022.75, 134100.96, 133606.12, 132650.65, 132206.84, 131272.98, 130678.9, 130188.7, 127941.67, 133766.91, 132026.24, 130524.47, 129939.42, 129319.55, 129057.23, 124558.8, 124296.48, 127461.04, 126322.02, 124787.53, 134089.83, 132909.58, 132349.66, 130811.11, 125916.01, 125218.63, 124651.83, 124255.56, 123329.63, 122688.6, 121762.19, 121354.26, 120946.33, 120502.52, 120046.02, 113635.76, 112545.18, 111810.34, 110241.71, 109624.43, 108759.05, 106746.47, 106149.18, 105238.34, 104311.71, 103472.69, 102427.67, 98834.43, 107507.88, 106885.72, 106267.72, 105804.76, 105341.8, 103695.4, 101630.82, 100498.42, 99125.29, 97992.89, 96321.06, 95617.84, 93401.2, 80529.79, 75130.6, 67132.59, 77484.76, 72996.96, 92208.59, 115410.39, 112215.89, 108507.37, 100319.98, 114108.3, 109384.54, 118289.65, 117078.82, 135961.21, 152383.12, 165059.07, 160076.34, 158088.03, 156999.17];
 
   function drawChart(data) {
     try {
-    const canvas = document.getElementById('bankrollChart');
-    if (!canvas || !data || data.length < 2) return;
-    const ctx = canvas.getContext('2d');
-    const W = canvas.offsetWidth || 800;
-    const H = 180;
-    canvas.width = W;
-    canvas.height = H;
-    const pad = { top: 20, right: 20, bottom: 10, left: 20 };
-    const minV = Math.min.apply(null, data) * 0.98;
-    const maxV = Math.max.apply(null, data) * 1.02;
-    function xPos(i) { return pad.left + (i / (data.length - 1)) * (W - pad.left - pad.right); }
-    function yPos(v) { return pad.top + (1 - (v - minV) / (maxV - minV)) * (H - pad.top - pad.bottom); }
-    var grad = ctx.createLinearGradient(0, pad.top, 0, H);
-    grad.addColorStop(0, 'rgba(232,160,32,0.18)');
-    grad.addColorStop(1, 'rgba(232,160,32,0)');
-    ctx.beginPath();
-    ctx.moveTo(xPos(0), H);
-    ctx.lineTo(xPos(0), yPos(data[0]));
-    data.forEach(function(v, i) { if (i > 0) ctx.lineTo(xPos(i), yPos(v)); });
-    ctx.lineTo(xPos(data.length - 1), H);
-    ctx.closePath();
-    ctx.fillStyle = grad;
-    ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(xPos(0), yPos(data[0]));
-    data.forEach(function(v, i) { if (i > 0) ctx.lineTo(xPos(i), yPos(v)); });
-    ctx.strokeStyle = '#E8A020';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.setLineDash([4, 4]);
-    ctx.moveTo(pad.left, yPos(100000));
-    ctx.lineTo(W - pad.right, yPos(100000));
-    ctx.strokeStyle = 'rgba(106,114,128,0.4)';
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    ctx.setLineDash([]);
-    var peakIdx = data.indexOf(Math.max.apply(null, data));
-    ctx.beginPath();
-    ctx.arc(xPos(peakIdx), yPos(data[peakIdx]), 4, 0, Math.PI * 2);
-    ctx.fillStyle = '#E8A020';
-    ctx.fill();
-    ctx.font = '9px IBM Plex Mono';
-    ctx.fillStyle = 'rgba(106,114,128,0.6)';
-    ctx.fillText('$100k baseline', pad.left + 4, yPos(100000) - 4);
-    } catch(e) { console.warn('Chart error:', e); }
+      var canvas = document.getElementById('bankrollChart');
+      if (!canvas || !data || data.length < 2) return;
+      var ctx = canvas.getContext('2d');
+      var W = canvas.offsetWidth || 800;
+      var H = 180;
+      canvas.width = W; canvas.height = H;
+      var pad = {top:20,right:20,bottom:10,left:20};
+      var minV = Math.min.apply(null,data)*0.98;
+      var maxV = Math.max.apply(null,data)*1.02;
+      function xPos(i){return pad.left+(i/(data.length-1))*(W-pad.left-pad.right);}
+      function yPos(v){return pad.top+(1-(v-minV)/(maxV-minV))*(H-pad.top-pad.bottom);}
+      var grad = ctx.createLinearGradient(0,pad.top,0,H);
+      grad.addColorStop(0,'rgba(232,160,32,0.18)');
+      grad.addColorStop(1,'rgba(232,160,32,0)');
+      ctx.beginPath(); ctx.moveTo(xPos(0),H); ctx.lineTo(xPos(0),yPos(data[0]));
+      data.forEach(function(v,i){if(i>0)ctx.lineTo(xPos(i),yPos(v));});
+      ctx.lineTo(xPos(data.length-1),H); ctx.closePath();
+      ctx.fillStyle=grad; ctx.fill();
+      ctx.beginPath(); ctx.moveTo(xPos(0),yPos(data[0]));
+      data.forEach(function(v,i){if(i>0)ctx.lineTo(xPos(i),yPos(v));});
+      ctx.strokeStyle='#E8A020'; ctx.lineWidth=1.5; ctx.stroke();
+      ctx.beginPath(); ctx.setLineDash([4,4]);
+      ctx.moveTo(pad.left,yPos(100000)); ctx.lineTo(W-pad.right,yPos(100000));
+      ctx.strokeStyle='rgba(106,114,128,0.4)'; ctx.lineWidth=1; ctx.stroke(); ctx.setLineDash([]);
+      var pi=data.indexOf(Math.max.apply(null,data));
+      ctx.beginPath(); ctx.arc(xPos(pi),yPos(data[pi]),4,0,Math.PI*2);
+      ctx.fillStyle='#E8A020'; ctx.fill();
+      ctx.font='9px IBM Plex Mono'; ctx.fillStyle='rgba(106,114,128,0.6)';
+      ctx.fillText('$100k baseline',pad.left+4,yPos(100000)-4);
+    } catch(e) { console.warn('chart error',e); }
   }
 
   function renderTrackRecord(bets) {
@@ -2192,49 +2180,31 @@ body {
     }
     var rows = '';
     bets.forEach(function(b) {
-      var isW = b.result === 'W';
-      var isL = b.result === 'L';
-      var cls = isW ? 'td-win' : isL ? 'td-loss' : 'td-pending';
-      var lbl = isW ? 'WIN ✓' : isL ? 'LOSS' : 'PENDING';
-      rows += '<tr>';
-      rows += '<td>' + b.date + '</td>';
-      rows += '<td>' + b.sport + '</td>';
-      rows += '<td>' + b.team + '</td>';
-      rows += '<td>' + b.book + '</td>';
-      rows += '<td class="td-odds">' + b.odds + '</td>';
-      rows += '<td class="' + cls + '">' + lbl + '</td>';
-      rows += '</tr>';
+      var isW=b.result==='W', isL=b.result==='L';
+      var cls=isW?'td-win':isL?'td-loss':'td-pending';
+      var lbl=isW?'WIN ✓':isL?'LOSS':'PENDING';
+      rows+='<tr><td>'+b.date+'</td><td>'+b.sport+'</td><td>'+b.team+'</td><td>'+b.book+'</td><td class="td-odds">'+b.odds+'</td><td class="'+cls+'">'+lbl+'</td></tr>';
     });
     tbody.innerHTML = rows;
   }
 
   function renderStats(s) {
     if (!s) return;
-    var els = {
-      'tr-total':   s.total,
-      'tr-wins':    s.wins,
-      'tr-losses':  s.losses,
-      'tr-wr':      s.win_rate + '%',
-      'tr-updated': 'Updated: ' + s.updated,
-      'peak-label': 'Peak: $' + (s.peak || 0).toLocaleString()
-    };
-    Object.keys(els).forEach(function(id) {
-      var el = document.getElementById(id);
-      if (el) el.textContent = els[id];
-    });
-    var roiEl = document.getElementById('tr-roi');
-    if (roiEl && s.roi !== undefined) {
-      roiEl.textContent = (s.roi >= 0 ? '+' : '') + s.roi + '%';
-      roiEl.className = 'tr-stat-val ' + (s.roi >= 0 ? 'green' : 'red');
-    }
+    var map = {'tr-total':s.total,'tr-wins':s.wins,'tr-losses':s.losses,'tr-wr':s.win_rate+'%','tr-updated':'Updated: '+(s.updated||''),'peak-label':'Peak: $'+(s.peak||0).toLocaleString()};
+    Object.keys(map).forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=map[id]; });
+    var roi=document.getElementById('tr-roi');
+    if(roi&&s.roi!==undefined){ roi.textContent=(s.roi>=0?'+':'')+s.roi+'%'; roi.className='tr-stat-val '+(s.roi>=0?'green':'red'); }
   }
 
-  var LIVE_DATA = {"generated": "03/09/26 Live", "stats": {"total": 227, "wins": 50, "losses": 177, "win_rate": 22.0, "peak": 165059.07, "current": 156999.17, "roi": 57.0}, "bankroll_curve": [{"date": "2025-12-31", "value": 100000}, {"date": "2025-12-31", "value": 98639.81}, {"date": "2025-12-31", "value": 96547.03}, {"date": "2026-01-01", "value": 100310.47}, {"date": "2026-01-01", "value": 108063.63}, {"date": "2026-01-01", "value": 103943.66}, {"date": "2026-01-01", "value": 107707.1}, {"date": "2026-01-02", "value": 106241.5}, {"date": "2026-01-03", "value": 109036.53}, {"date": "2026-01-10", "value": 107361.18}, {"date": "2026-01-10", "value": 114504.04}, {"date": "2026-01-11", "value": 112232.46}, {"date": "2026-01-18", "value": 117703.6}, {"date": "2026-01-18", "value": 121018.52}, {"date": "2026-01-20", "value": 119105.25}, {"date": "2026-01-20", "value": 116657.27}, {"date": "2026-01-21", "value": 119724.75}, {"date": "2026-01-22", "value": 118513.51}, {"date": "2026-01-24", "value": 117908.78}, {"date": "2026-01-24", "value": 126287.93}, {"date": "2026-01-24", "value": 125791.67}, {"date": "2026-01-25", "value": 125350.64}, {"date": "2026-01-25", "value": 130038.13}, {"date": "2026-01-25", "value": 129236.92}, {"date": "2026-01-27", "value": 128297.34}, {"date": "2026-01-27", "value": 127441.18}, {"date": "2026-01-27", "value": 126749.26}, {"date": "2026-01-28", "value": 121487.11}, {"date": "2026-01-28", "value": 119931.01}, {"date": "2026-01-29", "value": 122650.67}, {"date": "2026-01-29", "value": 125135.14}, {"date": "2026-01-29", "value": 122380.32}, {"date": "2026-01-30", "value": 127745.6}, {"date": "2026-01-30", "value": 127321.87}, {"date": "2026-01-30", "value": 125552.41}, {"date": "2026-01-30", "value": 123980.08}, {"date": "2026-01-30", "value": 117491.84}, {"date": "2026-01-30", "value": 121189.01}, {"date": "2026-01-31", "value": 117216.38}, {"date": "2026-01-31", "value": 123362.04}, {"date": "2026-01-31", "value": 122941.46}, {"date": "2026-01-31", "value": 122272.13}, {"date": "2026-01-31", "value": 121708.54}, {"date": "2026-01-31", "value": 120732.85}, {"date": "2026-01-31", "value": 119907.21}, {"date": "2026-02-01", "value": 117894.33}, {"date": "2026-02-01", "value": 116301.02}, {"date": "2026-02-01", "value": 114973.86}, {"date": "2026-02-01", "value": 112118.92}, {"date": "2026-02-01", "value": 118328.78}, {"date": "2026-02-01", "value": 117881.35}, {"date": "2026-02-02", "value": 117269.05}, {"date": "2026-02-04", "value": 115807.06}, {"date": "2026-02-05", "value": 115303.77}, {"date": "2026-02-05", "value": 114227.09}, {"date": "2026-02-05", "value": 113204.55}, {"date": "2026-02-05", "value": 112093.44}, {"date": "2026-02-05", "value": 111717.92}, {"date": "2026-02-05", "value": 121140.72}, {"date": "2026-02-06", "value": 120292.22}, {"date": "2026-02-06", "value": 119420.43}, {"date": "2026-02-06", "value": 118637.79}, {"date": "2026-02-06", "value": 117390.09}, {"date": "2026-02-06", "value": 116899.03}, {"date": "2026-02-07", "value": 116049.29}, {"date": "2026-02-07", "value": 117299.29}, {"date": "2026-02-07", "value": 118549.29}, {"date": "2026-02-07", "value": 117785.57}, {"date": "2026-02-07", "value": 116847.72}, {"date": "2026-02-07", "value": 115391.15}, {"date": "2026-02-07", "value": 114686.71}, {"date": "2026-02-07", "value": 114254.29}, {"date": "2026-02-07", "value": 113821.87}, {"date": "2026-02-07", "value": 112442.06}, {"date": "2026-02-07", "value": 115181.79}, {"date": "2026-02-07", "value": 113749.02}, {"date": "2026-02-07", "value": 121441.32}, {"date": "2026-02-07", "value": 120833.3}, {"date": "2026-02-07", "value": 119376.42}, {"date": "2026-02-07", "value": 118585.19}, {"date": "2026-02-07", "value": 118138.0}, {"date": "2026-02-07", "value": 123386.6}, {"date": "2026-02-08", "value": 121942.44}, {"date": "2026-02-08", "value": 121298.02}, {"date": "2026-02-08", "value": 126677.77}, {"date": "2026-02-10", "value": 126181.51}, {"date": "2026-02-10", "value": 131402.41}, {"date": "2026-02-11", "value": 133611.24}, {"date": "2026-02-11", "value": 130127.96}, {"date": "2026-02-11", "value": 129423.61}, {"date": "2026-02-11", "value": 128918.55}, {"date": "2026-02-11", "value": 128310.24}, {"date": "2026-02-11", "value": 127762.77}, {"date": "2026-02-11", "value": 127249.43}, {"date": "2026-02-11", "value": 126508.69}, {"date": "2026-02-11", "value": 125561.72}, {"date": "2026-02-13", "value": 124958.65}, {"date": "2026-02-13", "value": 123943.11}, {"date": "2026-02-13", "value": 119911.87}, {"date": "2026-02-13", "value": 119201.44}, {"date": "2026-02-14", "value": 118725.25}, {"date": "2026-02-14", "value": 117881.93}, {"date": "2026-02-14", "value": 117172.49}, {"date": "2026-02-14", "value": 116486.14}, {"date": "2026-02-14", "value": 119145.71}, {"date": "2026-02-14", "value": 118567.13}, {"date": "2026-02-15", "value": 117820.86}, {"date": "2026-02-15", "value": 120384.96}, {"date": "2026-02-15", "value": 122718.29}, {"date": "2026-02-15", "value": 118985.31}, {"date": "2026-02-15", "value": 123499.2}, {"date": "2026-02-15", "value": 120712.13}, {"date": "2026-02-15", "value": 122101.02}, {"date": "2026-02-16", "value": 125355.46}, {"date": "2026-02-17", "value": 124996.85}, {"date": "2026-02-17", "value": 124638.24}, {"date": "2026-02-18", "value": 124000.31}, {"date": "2026-02-18", "value": 127640.16}, {"date": "2026-02-19", "value": 125558.14}, {"date": "2026-02-19", "value": 129445.06}, {"date": "2026-02-19", "value": 127709.36}, {"date": "2026-02-19", "value": 133534.59}, {"date": "2026-02-19", "value": 141312.39}, {"date": "2026-02-19", "value": 140064.23}, {"date": "2026-02-19", "value": 139027.47}, {"date": "2026-02-20", "value": 138403.35}, {"date": "2026-02-20", "value": 136706.52}, {"date": "2026-02-20", "value": 135066.41}, {"date": "2026-02-20", "value": 133959.6}, {"date": "2026-02-20", "value": 137869.07}, {"date": "2026-02-20", "value": 136819.35}, {"date": "2026-02-21", "value": 136423.08}, {"date": "2026-02-21", "value": 135856.28}, {"date": "2026-02-21", "value": 135165.67}, {"date": "2026-02-21", "value": 134541.45}, {"date": "2026-02-21", "value": 133997.18}, {"date": "2026-02-21", "value": 133322.97}, {"date": "2026-02-22", "value": 132038.32}, {"date": "2026-02-25", "value": 131382.57}, {"date": "2026-02-25", "value": 138281.56}, {"date": "2026-02-25", "value": 136129.66}, {"date": "2026-02-25", "value": 135682.6}, {"date": "2026-02-25", "value": 139069.06}, {"date": "2026-02-25", "value": 138399.84}, {"date": "2026-02-26", "value": 137853.97}, {"date": "2026-02-26", "value": 137363.3}, {"date": "2026-02-26", "value": 136766.01}, {"date": "2026-02-26", "value": 136022.75}, {"date": "2026-02-27", "value": 134100.96}, {"date": "2026-02-27", "value": 133606.12}, {"date": "2026-02-27", "value": 132650.65}, {"date": "2026-02-28", "value": 132206.84}, {"date": "2026-02-28", "value": 131272.98}, {"date": "2026-02-28", "value": 130678.9}, {"date": "2026-02-28", "value": 130188.7}, {"date": "2026-02-28", "value": 127941.67}, {"date": "2026-02-28", "value": 133766.91}, {"date": "2026-02-28", "value": 132026.24}, {"date": "2026-02-28", "value": 130524.47}, {"date": "2026-02-28", "value": 129939.42}, {"date": "2026-02-28", "value": 129319.55}, {"date": "2026-02-28", "value": 129057.23}, {"date": "2026-02-28", "value": 124558.8}, {"date": "2026-02-28", "value": 124296.48}, {"date": "2026-02-28", "value": 127461.04}, {"date": "2026-02-28", "value": 126322.02}, {"date": "2026-02-28", "value": 124787.53}, {"date": "2026-02-28", "value": 134089.83}, {"date": "2026-03-01", "value": 132909.58}, {"date": "2026-03-01", "value": 132349.66}, {"date": "2026-03-01", "value": 130811.11}, {"date": "2026-03-01", "value": 125916.01}, {"date": "2026-03-01", "value": 125218.63}, {"date": "2026-03-01", "value": 124651.83}, {"date": "2026-03-03", "value": 124255.56}, {"date": "2026-03-04", "value": 123329.63}, {"date": "2026-03-04", "value": 122688.6}, {"date": "2026-03-04", "value": 121762.19}, {"date": "2026-03-04", "value": 121354.26}, {"date": "2026-03-04", "value": 120946.33}, {"date": "2026-03-04", "value": 120502.52}, {"date": "2026-03-04", "value": 120046.02}, {"date": "2026-03-05", "value": 113635.76}, {"date": "2026-03-05", "value": 112545.18}, {"date": "2026-03-05", "value": 111810.34}, {"date": "2026-03-06", "value": 110241.71}, {"date": "2026-03-06", "value": 109624.43}, {"date": "2026-03-06", "value": 108759.05}, {"date": "2026-03-06", "value": 106746.47}, {"date": "2026-03-06", "value": 106149.18}, {"date": "2026-03-07", "value": 105238.34}, {"date": "2026-03-07", "value": 104311.71}, {"date": "2026-03-07", "value": 103472.69}, {"date": "2026-03-07", "value": 102427.67}, {"date": "2026-03-07", "value": 98834.43}, {"date": "2026-03-07", "value": 107507.88}, {"date": "2026-03-07", "value": 106885.72}, {"date": "2026-03-07", "value": 106267.72}, {"date": "2026-03-07", "value": 105804.76}, {"date": "2026-03-07", "value": 105341.8}, {"date": "2026-03-08", "value": 103695.4}, {"date": "2026-03-08", "value": 101630.82}, {"date": "2026-03-08", "value": 100498.42}, {"date": "2026-03-08", "value": 99125.29}, {"date": "2026-03-08", "value": 97992.89}, {"date": "2026-03-08", "value": 96321.06}, {"date": "2026-03-08", "value": 95617.84}, {"date": "2026-03-08", "value": 93401.2}, {"date": "2026-03-08", "value": 80529.79}, {"date": "2026-03-08", "value": 75130.6}, {"date": "2026-03-08", "value": 67132.59}, {"date": "2026-03-08", "value": 77484.76}, {"date": "2026-03-08", "value": 72996.96}, {"date": "2026-03-08", "value": 92208.59}, {"date": "2026-03-08", "value": 115410.39}, {"date": "2026-03-08", "value": 112215.89}, {"date": "2026-03-08", "value": 108507.37}, {"date": "2026-03-08", "value": 100319.98}, {"date": "2026-03-08", "value": 114108.3}, {"date": "2026-03-08", "value": 109384.54}, {"date": "2026-03-08", "value": 118289.65}, {"date": "2026-03-08", "value": 117078.82}, {"date": "2026-03-08", "value": 135961.21}, {"date": "2026-03-08", "value": 152383.12}, {"date": "2026-03-08", "value": 165059.07}, {"date": "2026-03-08", "value": 160076.34}, {"date": "2026-03-08", "value": 158088.03}, {"date": "2026-03-09", "value": 156999.17}], "last_10_bets": [{"date": "03/09/26", "team": "North Dakota Fighting Hawks", "book": "LowVig.ag", "odds": "+476", "sport": "NCAAB", "result": "L"}, {"date": "03/08/26", "team": "Loyola Marymount Lions", "book": "Bovada", "odds": "+700", "sport": "CBALL", "result": "L"}, {"date": "03/08/26", "team": "Western Carolina Catamounts", "book": "LowVig.ag", "odds": "+140", "sport": "NCAAB", "result": "L"}, {"date": "03/08/26", "team": "East Tennessee St Buccaneers", "book": "FanDuel", "odds": "+122", "sport": "NCAAB", "result": "W"}, {"date": "03/08/26", "team": "CSU Northridge Matadors", "book": "FanDuel", "odds": "+459", "sport": "CBALL", "result": "W"}, {"date": "03/08/26", "team": "Northern Kentucky Norse", "book": "FanDuel", "odds": "+124", "sport": "NCAAB", "result": "W"}, {"date": "03/08/26", "team": "Maryland Terrapins", "book": "BetRivers", "odds": "+650", "sport": "NCAAB", "result": "L"}, {"date": "03/08/26", "team": "Monmouth Hawks", "book": "Bovada", "odds": "+110", "sport": "NCAAB", "result": "W"}, {"date": "03/08/26", "team": "Drexel Dragons", "book": "FanDuel", "odds": "+125", "sport": "NCAAB", "result": "L"}, {"date": "03/08/26", "team": "UAB Blazers", "book": "DraftKings", "odds": "+135", "sport": "NCAAB", "result": "W"}]};
-  var FALLBACK_CURVE = [100000,97800,94200,103200,112000,119200,125800,134500,141312,133400,123600,114200,103200,94800,85400];
-
-  // Load embedded live data directly
-  function loadData(d) {
-    var curve = d.bankroll_curve ? d.bankroll_curve.map(function(p) { return p.value; }) : FALLBACK_CURVE;
-    drawChart(curve);
-    if (d.stats) { d.stats.updated = d.generated || ''; renderStats(d.stats); }
-    if (d.last_10_bets) renderTrackR
+  window.addEventListener('load', function() {
+    try {
+      var d = LIVE_DATA;
+      var curve = d.bankroll_curve ? d.bankroll_curve.map(function(p){return p.value;}) : FALLBACK;
+      drawChart(curve);
+      if (d.stats) { d.stats.updated = d.generated||''; renderStats(d.stats); }
+      if (d.last_10_bets) renderTrackRecord(d.last_10_bets);
+    } catch(e) { console.warn('load error',e); drawChart(FALLBACK); }
+  });
+</script>
+</body>
+</html>
