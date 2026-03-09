@@ -2134,6 +2134,7 @@ body {
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   function drawChart(data) {
+    try {
     const canvas = document.getElementById('bankrollChart');
     if (!canvas || !data || data.length < 2) return;
     const ctx = canvas.getContext('2d');
@@ -2179,6 +2180,7 @@ body {
     ctx.font = '9px IBM Plex Mono';
     ctx.fillStyle = 'rgba(106,114,128,0.6)';
     ctx.fillText('$100k baseline', pad.left + 4, yPos(100000) - 4);
+    } catch(e) { console.warn('Chart error:', e); }
   }
 
   function renderTrackRecord(bets) {
