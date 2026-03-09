@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RRP Tech — Sports Betting Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+:root {
+  --bg:       #0A0C0F;
+  --bg2:      #0F1215;
+  --bg3:      #141820;
+  --panel:    #111418;
+  --border:   #1E2229;
+  --border2:  #252B35;
+  --amber:    #E8A020;
+  --amber2:   #C4841A;
+  --amber-dim:#5A3D10;
+  --cyan:     #00B4C8;
+  --green:    #28C474;
+  --red:      #E84040;
+  --white:    #D8DCE4;
+  --sub:      #6A7280;
+  --dim:      #2E3440;
+}
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* ── STATUS BAR ── */
+.status-bar {
+  background: var(--amber);
+  color: #000;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 5px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-bar span { opacity: 0.7; font-weight: 300; }
+
+/* ── TOP BAR ── */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border2);
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-mark {
+  width: 28px; height: 28px;
+  background: var(--amber);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.logo-sub {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--sub);
+  text-transform: uppercase;
+}
+
+.topbar-nav {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+.topbar-nav a {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sub);
+  text-decoration: none;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid var(--border);
+  transition: all 0.15s;
+}
+
+.topbar-nav a:hover { color: var(--amber); background: rgba(232,160,32,0.04); }
+
+.topbar-nav .nav-cta {
+  background: var(--amber);
+  color: #000;
+  font-weight: 500;
+  border-left: none;
+}
+
+.topbar-nav .nav-cta:hover { background: #F0B030; color: #000; }
+
+.topbar-ticker {
+  display: flex;
+  align-items: stretch;
+  height: 28px;
+  border-top: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.ticker-label {
+  background: var(--amber);
+  color: #000;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.ticker-scroll {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.ticker-track {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: max-content;
+  animation: ticker 40s linear infinite;
+  gap: 0;
+}
+
+.ticker-item {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  padding: 0 24px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+  color: var(--sub);
+  white-space: nowrap;
+}
+
+.ticker-item .up   { color: var(--green); }
+.ticker-item .down { color: var(--red); }
+.ticker-item .hi   { color: var(--amber); }
+
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ── LAYOUT ── */
+.page { padding-top: 77px; }
+
+/* ── HERO TERMINAL ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  min-height: calc(100vh - 77px);
+}
+
+.hero-main {
+  padding: 40px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 48px;
+}
+
+.meta-chip {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border: 1px solid var(--border2);
+  color: var(--sub);
+  margin-right: -1px;
+}
+
+.meta-chip.active {
+  background: var(--amber);
+  color: #000;
+  border-color: var(--amber);
+  font-weight: 500;
+}
+
+.hero-headline {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--white);
+}
+
+.hero-headline .hl { color: var(--amber); }
+.hero-headline .dim { color: var(--sub); }
+
+.hero-desc {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--sub);
+  line-height: 1.8;
+  max-width: 560px;
+  margin-top: 28px;
+  letter-spacing: 0.03em;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid var(--border);
+  margin-top: 48px;
+}
+
+.hstat {
+  padding: 20px 24px;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+
+.hstat:last-child { border-right: none; }
+
+.hstat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--border2);
+  transition: background 0.2s;
+}
+
+.hstat:hover::before { background: var(--amber); }
+
+.hstat-val {
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--amber);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.hstat-label {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sub);
+  line-height: 1.5;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 40px;
+}
+
+.btn-primary {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #000;
+  background: var(--amber);
+  padding: 14px 36px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.15s;
+  border: 1px solid var(--amber);
+}
+
+.btn-primary:hover { background: #F0B030; }
+
+.btn-ghost {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sub);
+  text-decoration: none;
+  padding: 14px 28px;
+  border: 1px solid var(--border2);
+  border-left: none;
+  transition: all 0.15s;
+}
+
+.btn-ghost:hover { color: var(--white); border-color: var(--sub); }
+
+/* ── HERO SIDEBAR PANEL ── */
+.hero-panel { display: none; }
+
+.panel-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-title {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.panel-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--green);
+}
+
+.status-dot {
+  width: 6px; height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.terminal-body {
+  flex: 1;
+  padding: 20px;
+  font-size: 11px;
+  line-height: 1.9;
+  overflow: hidden;
+}
+
+.tl { display: block; }
+.tl-prompt { color: var(--amber2); }
+.tl-cmd    { color: var(--white); }
+.tl-out    { color: var(--sub); }
+.tl-ok     { color: var(--green); }
+.tl-val    { color: var(--cyan); }
+.tl-warn   { color: var(--amber); }
+.tl-blank  { display: block; height: 8px; }
+
+.tl-block {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-left: 2px solid var(--amber);
+  padding: 12px 16px;
+  margin: 8px 0;
+}
+
+.cursor {
+  display: inline-block;
+  width: 7px; height: 13px;
+  background: var(--amber);
+  animation: blink 1s step-end infinite;
+  vertical-align: text-bottom;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ── DATA SECTIONS ── */
+.data-section {
+  border-bottom: 1px solid var(--border);
+}
+
+.ds-header {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.ds-label {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  padding: 12px 20px;
+  border-right: 1px solid var(--border);
+  background: rgba(232,160,32,0.06);
+}
+
+.ds-title {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  padding: 12px 20px;
+  border-right: 1px solid var(--border);
+}
+
+.ds-meta {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--sub);
+  padding: 12px 20px;
+  margin-left: auto;
+}
+
+/* ── METHOD GRID ── */
+.method-wrap { padding: 0; }
+
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  background: var(--border);
+}
+
+.method-cell {
+  background: var(--bg2);
+  padding: 32px 28px;
+  border: none;
+  position: relative;
+  transition: background 0.15s;
+}
+
+.method-cell:hover { background: var(--bg3); }
+
+.method-cell::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: transparent;
+  transition: background 0.15s;
+}
+
+.method-cell:hover::after { background: var(--amber); }
+
+.mc-index {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--amber);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.mc-title {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.mc-body {
+  font-size: 11px;
+  color: var(--sub);
+  line-height: 1.85;
+  font-weight: 300;
+}
+
+.mc-tag {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  border-bottom: 1px solid var(--cyan);
+  padding-bottom: 1px;
+  opacity: 0.7;
+}
+
+/* ── SIGNAL TABLE ── */
+.signal-wrap {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 0;
+}
+
+.signal-copy {
+  padding: 32px;
+  border-right: 1px solid var(--border);
+}
+
+.signal-copy h3 {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.signal-copy h3 .hl { color: var(--amber); }
+
+.signal-copy p {
+  font-size: 11px;
+  color: var(--sub);
+  line-height: 1.85;
+  margin-bottom: 12px;
+  font-weight: 300;
+  max-width: 480px;
+}
+
+.signal-copy p strong { color: var(--white); font-weight: 400; }
+
+.signal-panel {
+  background: var(--panel);
+}
+
+.sp-head {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sp-badge {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.sp-type {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--sub);
+  text-transform: uppercase;
+}
+
+.sp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s;
+}
+
+.sp-row:hover { background: rgba(232,160,32,0.03); }
+
+.sp-key {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sub);
+}
+
+.sp-val {
+  font-size: 13px;
+  color: var(--white);
+  font-weight: 300;
+}
+
+.sp-val.hi   { color: var(--amber); }
+.sp-val.good { color: var(--green); }
+
+.sp-foot {
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  background: var(--bg3);
+  border-top: 1px solid var(--border);
+}
+
+.sp-foot span {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sub);
+}
+
+.sp-foot .ok { color: var(--green); }
+
+/* ── PRICING ── */
+.pricing-wrap {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 0;
+}
+
+.pricing-copy {
+  padding: 32px;
+  border-right: 1px solid var(--border);
+}
+
+.pricing-copy h3 {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+.pricing-copy h3 .hl { color: var(--amber); }
+
+.pricing-copy p {
+  font-size: 11px;
+  color: var(--sub);
+  line-height: 1.85;
+  margin-bottom: 12px;
+  font-weight: 300;
+  max-width: 480px;
+}
+
+.rate-panel {
+  background: var(--panel);
+}
+
+.rp-head {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+}
+
+.rp-tier {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 12px;
+}
+
+.rp-price {
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.rp-price sup { font-size: 22px; vertical-align: super; color: var(--amber); }
+
+.rp-cadence {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sub);
+  margin-top: 6px;
+}
+
+.rp-items { padding: 0; }
+
+.rp-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--sub);
+  line-height: 1.6;
+  transition: background 0.12s;
+}
+
+.rp-item:hover { background: rgba(232,160,32,0.03); }
+
+.rp-dot {
+  color: var(--amber);
+  font-size: 14px;
+  margin-top: -2px;
+  flex-shrink: 0;
+}
+
+.rp-foot { padding: 16px; border-top: 1px solid var(--border); }
+
+.rp-disclaimer {
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+  margin-top: 10px;
+  line-height: 1.8;
+}
+
+/* ── FAQ TABLE ── */
+.faq-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.faq-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s;
+}
+
+.faq-table tbody tr:first-child { border-top: 1px solid var(--border); }
+.faq-table tbody tr:hover { background: var(--bg3); }
+
+.faq-table td {
+  padding: 20px 24px;
+  vertical-align: top;
+  font-size: 11px;
+  line-height: 1.85;
+}
+
+.faq-table td:first-child {
+  width: 40%;
+  color: var(--white);
+  font-weight: 400;
+  border-right: 1px solid var(--border);
+  font-size: 12px;
+  letter-spacing: 0.03em;
+}
+
+.faq-table td:last-child {
+  color: var(--sub);
+  font-weight: 300;
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  background: var(--panel);
+  border-top: 1px solid var(--border2);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-logo {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.footer-version {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--sub);
+  border-left: 1px solid var(--border2);
+  padding-left: 16px;
+}
+
+.footer-right {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--sub);
+  text-align: right;
+  line-height: 1.8;
+  text-transform: uppercase;
+}
+
+
+/* ── PIPELINE ── */
+.pipeline { padding: 0; }
+
+.pipe-stage {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.pipe-stage:last-child { border-bottom: none; }
+
+.pipe-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 0;
+  border-right: 1px solid var(--border);
+  background: var(--panel);
+  position: relative;
+}
+
+.pipe-num {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--amber);
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--amber2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(232,160,32,0.06);
+  flex-shrink: 0;
+}
+
+.pipe-connector {
+  width: 1px;
+  flex: 1;
+  background: var(--border2);
+  margin-top: 8px;
+}
+
+.pipe-content {
+  padding: 28px 32px;
+  background: var(--bg2);
+  transition: background 0.15s;
+}
+
+.pipe-stage:hover .pipe-content { background: var(--bg3); }
+
+.pipe-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.pipe-tag {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #000;
+  background: var(--amber);
+  padding: 3px 10px;
+  font-weight: 500;
+}
+
+.pipe-title {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: 0.06em;
+}
+
+.pipe-status {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sub);
+  margin-left: auto;
+}
+
+.pipe-status.active { color: var(--green); }
+
+.pipe-body-text {
+  font-size: 11px;
+  color: var(--sub);
+  line-height: 1.85;
+  font-weight: 300;
+  max-width: 680px;
+  margin-bottom: 20px;
+}
+
+.pipe-data-row {
+  display: flex;
+  gap: 0;
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+
+.pipe-datum {
+  flex: 1;
+  padding: 12px 16px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pipe-datum:last-child { border-right: none; }
+
+.pd-label {
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sub);
+}
+
+.pd-val {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: 0.04em;
+}
+
+.pd-val.amber { color: var(--amber); }
+.pd-val.green { color: var(--green); }
+
+/* SUMMARY BAR */
+.pipe-summary {
+  display: flex;
+  align-items: center;
+  background: var(--panel);
+  border-top: 1px solid var(--border2);
+  padding: 0;
+}
+
+.ps-item {
+  flex: 1;
+  padding: 16px 20px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+}
+
+.ps-item:last-child { border-right: none; }
+
+.ps-label {
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sub);
+}
+
+.ps-val {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--white);
+}
+
+.ps-val.amber { color: var(--amber); font-weight: 500; }
+
+.ps-arrow {
+  position: absolute;
+  right: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--amber);
+  z-index: 2;
+}
+
+
+/* ── HERO CHART ── */
+.hero-chart-wrap {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  margin-bottom: 0;
+  position: relative;
+}
+
+.hchart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hchart-label {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sub);
+}
+
+.hchart-val {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--amber);
+  font-weight: 500;
+}
+
+.hero-canvas {
+  width: 100%;
+  height: 180px;
+  display: block;
+}
+
+.hchart-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 16px;
+  border-top: 1px solid var(--border);
+}
+
+.hchart-footer span {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sub);
+}
+
+
+
+/* ── EMAIL MOCKUP ── */
+.email-mockup {
+  padding: 32px;
+  background: var(--bg);
+}
+
+.em-chrome {
+  max-width: 720px;
+  margin: 0 auto;
+  border: 1px solid var(--border2);
+  background: var(--panel);
+}
+
+.em-chrome-bar {
+  background: var(--bg3);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.em-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border2);
+}
+
+.em-chrome-title {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--sub);
+  text-transform: uppercase;
+  margin-left: 8px;
+}
+
+.em-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--bg2);
+}
+
+.em-from {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.em-from-label {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sub);
+  width: 56px;
+  flex-shrink: 0;
+}
+
+.em-from-val {
+  font-size: 11px;
+  color: var(--white);
+  letter-spacing: 0.04em;
+}
+
+.em-subject { display: flex; gap: 16px; align-items: baseline; }
+
+.em-body { padding: 24px; }
+
+.em-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.em-intro-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--amber);
+}
+
+.em-intro-date {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sub);
+}
+
+.em-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 16px 0;
+}
+
+.em-signal { margin: 8px 0; }
+
+.em-signal-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.em-sig-num {
+  font-size: 9px;
+  font-weight: 500;
+  color: #000;
+  background: var(--amber);
+  width: 20px; height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.em-sig-badge {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.em-sig-sport {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--sub);
+  text-transform: uppercase;
+  background: var(--bg3);
+  padding: 2px 8px;
+  border: 1px solid var(--border2);
+}
+
+.em-sig-time {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--sub);
+  margin-left: auto;
+}
+
+.em-signal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.em-sig-field {
+  background: var(--bg2);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background 0.12s;
+}
+
+.em-sig-field:hover { background: var(--bg3); }
+
+.esf-label {
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sub);
+}
+
+.esf-val {
+  font-size: 12px;
+  color: var(--white);
+  letter-spacing: 0.03em;
+}
+
+.esf-val.hi { color: var(--amber); font-weight: 500; }
+
+.em-footer-note {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--sub);
+  line-height: 1.8;
+  text-align: center;
+  padding-top: 8px;
+  text-transform: uppercase;
+}
+
+/* ── TRACK RECORD ── */
+.track-section { border-bottom: 1px solid var(--border); }
+
+.track-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.track-table thead tr {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border2);
+}
+
+.track-table thead th {
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.track-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s;
+}
+
+.track-table tbody tr:hover { background: var(--bg3); }
+
+.track-table tbody td {
+  padding: 12px 16px;
+  color: var(--sub);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+.track-table tbody td:first-child { color: var(--white); }
+
+.td-win  { color: var(--green) !important; font-weight: 500; }
+.td-loss { color: var(--red)   !important; font-weight: 500; }
+.td-pending { color: var(--sub) !important; }
+
+.track-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--panel);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.track-footer-stats {
+  display: flex;
+  gap: 32px;
+}
+
+.tf-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tf-label {
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sub);
+}
+
+.tf-val {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--white);
+}
+
+.tf-val.green { color: var(--green); }
+
+.track-updated {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--sub);
+  text-transform: uppercase;
+}
+
+
+
+/* ── EMAIL MOCKUP ── */
+.email-mockup {
+  padding: 32px;
+  background: var(--bg);
+}
+
+.em-chrome {
+  max-width: 720px;
+  margin: 0 auto;
+  border: 1px solid var(--border2);
+  background: var(--panel);
+}
+
+.em-chrome-bar {
+  background: var(--bg3);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.em-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border2);
+}
+
+.em-chrome-title {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--sub);
+  text-transform: uppercase;
+  margin-left: 8px;
+}
+
+.em-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--bg2);
+}
+
+.em-from {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.em-from-label {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sub);
+  width: 56px;
+  flex-shrink: 0;
+}
+
+.em-from-val {
+  font-size: 11px;
+  color: var(--white);
+  letter-spacing: 0.04em;
+}
+
+.em-subject { display: flex; gap: 16px; align-items: baseline; }
+
+.em-body { padding: 24px; }
+
+.em-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.em-intro-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--amber);
+}
+
+.em-intro-date {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sub);
+}
+
+.em-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 16px 0;
+}
+
+.em-signal { margin: 8px 0; }
+
+.em-signal-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.em-sig-num {
+  font-size: 9px;
+  font-weight: 500;
+  color: #000;
+  background: var(--amber);
+  width: 20px; height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.em-sig-badge {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.em-sig-sport {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--sub);
+  text-transform: uppercase;
+  background: var(--bg3);
+  padding: 2px 8px;
+  border: 1px solid var(--border2);
+}
+
+.em-sig-time {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--sub);
+  margin-left: auto;
+}
+
+.em-signal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.em-sig-field {
+  background: var(--bg2);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background 0.12s;
+}
+
+.em-sig-field:hover { background: var(--bg3); }
+
+.esf-label {
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sub);
+}
+
+.esf-val {
+  font-size: 12px;
+  color: var(--white);
+  letter-spacing: 0.03em;
+}
+
+.esf-val.hi { color: var(--amber); font-weight: 500; }
+
+.em-footer-note {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--sub);
+  line-height: 1.8;
+  text-align: center;
+  padding-top: 8px;
+  text-transform: uppercase;
+}
+
+/* ── TRACK RECORD ── */
+.tr-stats-row {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.tr-stat {
+  flex: 1;
+  padding: 20px 24px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tr-stat:last-child { border-right: none; }
+
+.tr-stat-val {
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1;
+}
+
+.tr-stat-val.green { color: var(--green); }
+.tr-stat-val.red   { color: var(--red); }
+.tr-stat-val.amber { color: var(--amber); }
+
+.tr-stat-label {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sub);
+}
+
+.tr-table-wrap { overflow-x: auto; }
+
+.tr-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.tr-table thead tr {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border2);
+}
+
+.tr-table thead th {
+  padding: 10px 20px;
+  text-align: left;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sub);
+  font-weight: 400;
+  border-right: 1px solid var(--border);
+}
+
+.tr-table thead th:last-child { border-right: none; }
+
+.tr-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s;
+}
+
+.tr-table tbody tr:hover { background: var(--bg3); }
+
+.tr-table tbody td {
+  padding: 12px 20px;
+  color: var(--sub);
+  border-right: 1px solid var(--border);
+  font-weight: 300;
+  letter-spacing: 0.03em;
+}
+
+.tr-table tbody td:last-child { border-right: none; }
+.tr-table tbody td:nth-child(3) { color: var(--white); }
+
+.td-win  { color: var(--green) !important; font-weight: 500; letter-spacing: 0.15em; }
+.td-loss { color: var(--red)   !important; font-weight: 500; letter-spacing: 0.15em; }
+.td-odds { color: var(--amber) !important; }
+.td-pending { color: var(--sub) !important; font-style: italic; }
+
+.tr-loading {
+  text-align: center;
+  padding: 32px !important;
+  color: var(--sub) !important;
+  letter-spacing: 0.1em;
+}
+
+.tr-footer {
+  padding: 12px 20px;
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sub);
+}
+
+
+/* ── EMAIL MOCKUP ── */
+.email-mockup { padding: 32px; background: var(--bg); }
+.em-chrome { max-width: 720px; margin: 0 auto; border: 1px solid var(--border2); background: var(--panel); }
+.em-chrome-bar { background: var(--bg3); padding: 10px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
+.em-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border2); }
+.em-chrome-title { font-size: 9px; letter-spacing: 0.12em; color: var(--sub); text-transform: uppercase; margin-left: 8px; }
+.em-header { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px; background: var(--bg2); }
+.em-from { display: flex; gap: 16px; align-items: baseline; }
+.em-from-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sub); width: 56px; flex-shrink: 0; }
+.em-from-val { font-size: 11px; color: var(--white); letter-spacing: 0.04em; }
+.em-body { padding: 24px; }
+.em-intro { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.em-intro-label { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; color: var(--amber); }
+.em-intro-date { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sub); }
+.em-divider { height: 1px; background: var(--border); margin: 16px 0; }
+.em-signal { margin: 8px 0; }
+.em-signal-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.em-sig-num { font-size: 9px; font-weight: 500; color: #000; background: var(--amber); width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.em-sig-badge { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--amber); }
+.em-sig-sport { font-size: 9px; letter-spacing: 0.15em; color: var(--sub); text-transform: uppercase; background: var(--bg3); padding: 2px 8px; border: 1px solid var(--border2); }
+.em-sig-time { font-size: 9px; letter-spacing: 0.1em; color: var(--sub); margin-left: auto; }
+.em-signal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.em-sig-field { background: var(--bg2); padding: 10px 14px; display: flex; flex-direction: column; gap: 4px; transition: background 0.12s; }
+.em-sig-field:hover { background: var(--bg3); }
+.esf-label { font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sub); }
+.esf-val { font-size: 12px; color: var(--white); letter-spacing: 0.03em; }
+.esf-val.hi { color: var(--amber); font-weight: 500; }
+.em-footer-note { font-size: 9px; letter-spacing: 0.08em; color: var(--sub); line-height: 1.8; text-align: center; padding-top: 8px; text-transform: uppercase; }
+
+/* ── REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .topbar-nav a:not(.nav-cta) { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-panel { display: none; }
+  .hero-stats { grid-template-columns: 1fr 1fr; }
+  .method-grid { grid-template-columns: 1fr; }
+  .signal-wrap, .pricing-wrap { grid-template-columns: 1fr; }
+  .signal-panel, .rate-panel { border-top: 1px solid var(--border); }
+  .faq-table td:first-child { width: 50%; }
+  .site-footer { flex-direction: column; gap: 12px; }
+  .footer-right { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-logo">
+      <div class="logo-mark">C</div>
+      <div>
+        <div class="logo-text">RRP Tech</div>
+        <div class="logo-sub">Sports Betting Engine</div>
+      </div>
+    </div>
+    <nav class="topbar-nav">
+      <a href="#methodology">Methodology</a>
+      <a href="#signals">Signals</a>
+      <a href="#membership">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="#membership" class="nav-cta">Subscribe — $9.99/mo</a>
+    </nav>
+  </div>
+  <div class="topbar-ticker">
+    <div class="ticker-label">Live</div>
+    <div class="ticker-scroll">
+      <div class="ticker-track">
+        <div class="ticker-item">NCAAB <span class="hi">ACTIVE</span></div>
+        <div class="ticker-item">COLLEGE BASEBALL <span class="hi">ACTIVE</span></div>
+        <div class="ticker-item">BOOKS SCANNED <span class="up">15+</span></div>
+        <div class="ticker-item">SIGNALS ISSUED <span class="hi">200+</span></div>
+        <div class="ticker-item">SYSTEMS REQUIRED <span class="hi">3 / 3</span></div>
+        <div class="ticker-item">MIN CLYP SCORE <span class="hi">60 / 100</span></div>
+        <div class="ticker-item">SIZING MODEL <span class="hi">HALF KELLY</span></div>
+        <div class="ticker-item">FANDUEL <span class="up">CONNECTED</span></div>
+        <div class="ticker-item">DRAFTKINGS <span class="up">CONNECTED</span></div>
+        <div class="ticker-item">BOVADA <span class="up">CONNECTED</span></div>
+        <div class="ticker-item">MEMBERSHIP <span class="hi">$49 / MO</span></div>
+        <div class="ticker-item">NCAAB <span class="hi">ACTIVE</span></div>
+        <div class="ticker-item">COLLEGE BASEBALL <span class="hi">ACTIVE</span></div>
+        <div class="ticker-item">BOOKS SCANNED <span class="up">15+</span></div>
+        <div class="ticker-item">SIGNALS ISSUED <span class="hi">200+</span></div>
+        <div class="ticker-item">SYSTEMS REQUIRED <span class="hi">3 / 3</span></div>
+        <div class="ticker-item">MIN CLYP SCORE <span class="hi">60 / 100</span></div>
+        <div class="ticker-item">SIZING MODEL <span class="hi">HALF KELLY</span></div>
+        <div class="ticker-item">FANDUEL <span class="up">CONNECTED</span></div>
+        <div class="ticker-item">DRAFTKINGS <span class="up">CONNECTED</span></div>
+        <div class="ticker-item">BOVADA <span class="up">CONNECTED</span></div>
+        <div class="ticker-item">MEMBERSHIP <span class="hi">$49 / MO</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="page">
+<section class="hero">
+  <div class="hero-main">
+    <div>
+      <div class="hero-meta">
+        <div class="meta-chip active">ML Intelligence</div>
+        <div class="meta-chip">v2.0</div>
+        <div class="meta-chip">NCAAB + CBALL</div>
+      </div>
+      <div class="hero-headline">
+        The market<br>
+        has <span class="hl">mispricings.</span><br>
+        <span class="dim">We find them.</span>
+      </div>
+      <p class="hero-desc">
+        A three-layer machine learning pipeline — proprietary scoring engine,
+        dual ML models, Half Kelly position sizing — scanning 15+ sportsbooks
+        daily to surface statistically significant edges before lines correct.
+      </p>
+    </div>
+
+    <div>
+      <!-- BANKROLL CURVE -->
+      <div class="hero-chart-wrap">
+        <div class="hchart-header">
+          <span class="hchart-label">Simulated Bankroll Curve — Half Kelly · $100k Base</span>
+          <span class="hchart-val" id="peak-label">Peak: $141,312</span>
+        </div>
+        <canvas id="bankrollChart" class="hero-canvas"></canvas>
+        <div class="hchart-footer">
+          <span>Dec 2025</span>
+          <span>Jan 2026</span>
+          <span>Feb 2026</span>
+          <span>Mar 2026</span>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hstat">
+          <div class="hstat-val">200+</div>
+          <div class="hstat-label">Verified<br>signals issued</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-val">3/3</div>
+          <div class="hstat-label">Systems must<br>confirm</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-val">15+</div>
+          <div class="hstat-label">Books<br>monitored</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-val">$9.99</div>
+          <div class="hstat-label">Per month<br>cancel anytime</div>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="https://rrptech.gumroad.com/l/tybelc" class="btn-primary">Subscribe — $9.99 / Month</a>
+        <a href="#methodology" class="btn-ghost">View Methodology</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERMINAL PANEL (hidden) -->
+  <div class="hero-panel">
+    <div class="panel-header">
+      <span class="panel-title">rrp_brain.py — Live Run</span>
+      <span class="panel-status"><span class="status-dot"></span>Running</span>
+    </div>
+    <div class="terminal-body">
+      <span class="tl"><span class="tl-prompt">$ </span><span class="tl-cmd">python rrp_brain.py</span></span>
+      <span class="tl-blank"></span>
+      <span class="tl"><span class="tl-out">[ SCANNER  ]  Fetching odds data...</span></span>
+      <span class="tl"><span class="tl-out">[ SCANNER  ]  Books loaded: </span><span class="tl-val">17</span></span>
+      <span class="tl"><span class="tl-out">[ SCANNER  ]  Markets scanned: </span><span class="tl-val">142</span></span>
+      <span class="tl-blank"></span>
+      <span class="tl"><span class="tl-out">[ SCORER   ]  Computing fair lines...</span></span>
+      <span class="tl"><span class="tl-out">[ SCORER   ]  Candidates above 60: </span><span class="tl-val">4</span></span>
+      <span class="tl-blank"></span>
+      <span class="tl"><span class="tl-out">[ LR MODEL ]  Running logistic regression...</span></span>
+      <span class="tl"><span class="tl-out">[ RF MODEL ]  Running random forest (200 trees)...</span></span>
+      <span class="tl-blank"></span>
+      <div class="tl-block">
+        <span class="tl"><span class="tl-warn">SIGNAL DETECTED</span></span>
+        <span class="tl"><span class="tl-out">team   </span><span class="tl-val">N. Kentucky Norse</span></span>
+        <span class="tl"><span class="tl-out">book   </span><span class="tl-val">FanDuel</span></span>
+        <span class="tl"><span class="tl-out">odds   </span><span class="tl-ok">+124</span></span>
+        <span class="tl"><span class="tl-out">clyp   </span><span class="tl-ok">100 / 100</span></span>
+        <span class="tl"><span class="tl-out">lr     </span><span class="tl-ok">PASS ✓</span></span>
+        <span class="tl"><span class="tl-out">rf     </span><span class="tl-ok">PASS ✓</span></span>
+        <span class="tl"><span class="tl-out">status </span><span class="tl-warn">FINAL SIGNAL</span></span>
+      </div>
+      <span class="tl-blank"></span>
+      <span class="tl"><span class="tl-out">[ EMAIL    ]  Draft generated</span></span>
+      <span class="tl"><span class="tl-ok">[ DONE     ]  Pipeline complete</span></span>
+      <span class="tl-blank"></span>
+      <span class="tl"><span class="tl-prompt">$ </span><span class="cursor"></span></span>
+    </div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="data-section reveal" id="methodology">
+  <div class="ds-header">
+    <span class="ds-label">01</span>
+    <span class="ds-title">Methodology — Full Pipeline Flow</span>
+    <span class="ds-meta">Raw odds → Verified signal · 5 stages</span>
+  </div>
+
+  <div class="pipeline">
+
+    <div class="pipe-stage">
+      <div class="pipe-left">
+        <div class="pipe-num">01</div>
+        <div class="pipe-connector"></div>
+      </div>
+      <div class="pipe-content">
+        <div class="pipe-header">
+          <span class="pipe-tag">Input</span>
+          <span class="pipe-title">Raw Odds Ingestion</span>
+          <span class="pipe-status active">● Live</span>
+        </div>
+        <p class="pipe-body-text">Every morning the scanner hits 15+ sportsbooks simultaneously — pulling moneylines, spreads, and totals across NCAAB and College Baseball. Raw odds are normalized into decimal format and timestamped. No filtering, no scoring. Just prices from the market.</p>
+        <div class="pipe-data-row">
+          <div class="pipe-datum"><span class="pd-label">Books scanned</span><span class="pd-val">15+</span></div>
+          <div class="pipe-datum"><span class="pd-label">Markets pulled</span><span class="pd-val">100–200 daily</span></div>
+          <div class="pipe-datum"><span class="pd-label">Format</span><span class="pd-val">Decimal odds</span></div>
+          <div class="pipe-datum"><span class="pd-label">Output file</span><span class="pd-val">Proprietary</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipe-stage">
+      <div class="pipe-left">
+        <div class="pipe-num">02</div>
+        <div class="pipe-connector"></div>
+      </div>
+      <div class="pipe-content">
+        <div class="pipe-header">
+          <span class="pipe-tag">Scoring</span>
+          <span class="pipe-title">Clyp Score — Proprietary Pricing Engine</span>
+          <span class="pipe-status">Threshold: 60 / 100</span>
+        </div>
+        <p class="pipe-body-text">Each market is run through the Clyp Score engine — a rules-based model that derives a fair-value consensus line by weighting odds across all available books. The score measures three things: how far a book deviates from consensus (arbitrage strength), how much positive expected value exists at the offered price (EV%), and whether the line has been drifting in our direction (momentum). Anything below 60 is eliminated here. The ML models never see it.</p>
+        <div class="pipe-data-row">
+          <div class="pipe-datum"><span class="pd-label">Score range</span><span class="pd-val">0 – 100</span></div>
+          <div class="pipe-datum"><span class="pd-label">Components</span><span class="pd-val">Arb · EV · Drift</span></div>
+          <div class="pipe-datum"><span class="pd-label">Pass threshold</span><span class="pd-val amber">≥ 60</span></div>
+          <div class="pipe-datum"><span class="pd-label">Typical pass rate</span><span class="pd-val">~5–15%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipe-stage">
+      <div class="pipe-left">
+        <div class="pipe-num">03</div>
+        <div class="pipe-connector"></div>
+      </div>
+      <div class="pipe-content">
+        <div class="pipe-header">
+          <span class="pipe-tag">ML Layer 1</span>
+          <span class="pipe-title">Logistic Regression — Linear Validation</span>
+          <span class="pipe-status">Independent model</span>
+        </div>
+        <p class="pipe-body-text">Candidates that clear the Clyp Score threshold are passed to the first ML model. The Logistic Regression assigns linear weights to each feature — odds, EV%, Clyp Score, book, sport — and outputs a win probability estimate. If that probability does not exceed the market's implied probability, the candidate is discarded. The LR model is conservative by design: reliable, stable, and well-suited to smaller datasets.</p>
+        <div class="pipe-data-row">
+          <div class="pipe-datum"><span class="pd-label">Model type</span><span class="pd-val">Logistic Regression</span></div>
+          <div class="pipe-datum"><span class="pd-label">Training data</span><span class="pd-val">Verified history</span></div>
+          <div class="pipe-datum"><span class="pd-label">Output</span><span class="pd-val">Win probability %</span></div>
+          <div class="pipe-datum"><span class="pd-label">Pass condition</span><span class="pd-val amber">P(win) > implied</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipe-stage">
+      <div class="pipe-left">
+        <div class="pipe-num">04</div>
+        <div class="pipe-connector"></div>
+      </div>
+      <div class="pipe-content">
+        <div class="pipe-header">
+          <span class="pipe-tag">ML Layer 2</span>
+          <span class="pipe-title">Random Forest — Non-Linear Validation</span>
+          <span class="pipe-status">Independent model</span>
+        </div>
+        <p class="pipe-body-text">The same candidate is simultaneously evaluated by a 200-tree Random Forest — an entirely separate model operating independently of the LR. Where the LR draws straight lines, the Random Forest captures complex combinations: patterns like FanDuel + NCAAB + Clyp Score above 70 that convert at rates no single variable would predict. Both models must agree independently. If the RF dissents, the signal is killed — no exceptions.</p>
+        <div class="pipe-data-row">
+          <div class="pipe-datum"><span class="pd-label">Model type</span><span class="pd-val">Random Forest</span></div>
+          <div class="pipe-datum"><span class="pd-label">Trees</span><span class="pd-val">200</span></div>
+          <div class="pipe-datum"><span class="pd-label">Strength</span><span class="pd-val">Non-linear combos</span></div>
+          <div class="pipe-datum"><span class="pd-label">Pass condition</span><span class="pd-val amber">P(win) > implied</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipe-stage">
+      <div class="pipe-left">
+        <div class="pipe-num">05</div>
+      </div>
+      <div class="pipe-content">
+        <div class="pipe-header">
+          <span class="pipe-tag">Output</span>
+          <span class="pipe-title">Half Kelly Sizing + Signal Delivery</span>
+          <span class="pipe-status active">● Delivered to inbox</span>
+        </div>
+        <p class="pipe-body-text">Candidates clearing all four gates receive a wager size via the Half Kelly Criterion — a mathematically proven formula that stakes proportionally to edge magnitude, protecting capital during variance while maximising long-run growth. The signal is formatted and delivered to member inboxes before tip-off, permanently timestamped and logged to the track record.</p>
+        <div class="pipe-data-row">
+          <div class="pipe-datum"><span class="pd-label">Sizing model</span><span class="pd-val">Half Kelly</span></div>
+          <div class="pipe-datum"><span class="pd-label">Reference bankroll</span><span class="pd-val">$100,000</span></div>
+          <div class="pipe-datum"><span class="pd-label">Delivery</span><span class="pd-val">Email · Pre tip-off</span></div>
+          <div class="pipe-datum"><span class="pd-label">Logged</span><span class="pd-val green">Permanently ✓</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pipe-summary">
+    <div class="ps-item"><span class="ps-label">Stage 1</span><span class="ps-val">Raw Odds</span><span class="ps-arrow">→</span></div>
+    <div class="ps-item"><span class="ps-label">Stage 2</span><span class="ps-val">Clyp Score ≥60</span><span class="ps-arrow">→</span></div>
+    <div class="ps-item"><span class="ps-label">Stage 3</span><span class="ps-val">LR Model Pass</span><span class="ps-arrow">→</span></div>
+    <div class="ps-item"><span class="ps-label">Stage 4</span><span class="ps-val">RF Model Pass</span><span class="ps-arrow">→</span></div>
+    <div class="ps-item"><span class="ps-label">Stage 5</span><span class="ps-val amber">Final Signal</span></div>
+  </div>
+
+</section>
+
+<!-- SIGNAL -->
+<section class="data-section reveal" id="signals">
+  <div class="ds-header">
+    <span class="ds-label">02</span>
+    <span class="ds-title">What You Get Every Day</span>
+    <span class="ds-meta">Delivered before tip-off · All 3 systems confirmed</span>
+  </div>
+  <div class="email-mockup">
+    <div class="em-chrome">
+      <div class="em-chrome-bar">
+        <div class="em-dot"></div><div class="em-dot"></div><div class="em-dot"></div>
+        <span class="em-chrome-title">Inbox — RRP Tech Signal · Mon Mar 09 2026</span>
+      </div>
+      <div class="em-header">
+        <div class="em-from"><span class="em-from-label">From</span><span class="em-from-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="85f6ece2ebe4e9f6c5f7f7f5f1e0e6edabe6eae8">[email&#160;protected]</a></span></div>
+        <div class="em-from"><span class="em-from-label">Subject</span><span class="em-from-val">RRP Tech · 3 Signals Today — Mon Mar 09 2026</span></div>
+      </div>
+      <div class="em-body">
+        <div class="em-intro">
+          <span class="em-intro-label">⬡ RRP TECH // SPORTS BETTING ENGINE</span>
+          <span class="em-intro-date">Monday, March 09, 2026</span>
+        </div>
+        <div class="em-divider"></div>
+        <div class="em-signal">
+          <div class="em-signal-head">
+            <span class="em-sig-num">01</span>
+            <span class="em-sig-badge">● FINAL SIGNAL</span>
+            <span class="em-sig-sport">NCAAB</span>
+            <span class="em-sig-time">7:00 PM ET</span>
+          </div>
+          <div class="em-signal-grid">
+            <div class="em-sig-field"><span class="esf-label">Game</span><span class="esf-val">Green Bay vs N. Kentucky</span></div>
+            <div class="em-sig-field"><span class="esf-label">Bet</span><span class="esf-val hi">Northern Kentucky Norse</span></div>
+            <div class="em-sig-field"><span class="esf-label">Book</span><span class="esf-val">FanDuel</span></div>
+            <div class="em-sig-field"><span class="esf-label">Odds</span><span class="esf-val hi">+124</span></div>
+            <div class="em-sig-field"><span class="esf-label">Clyp Score</span><span class="esf-val hi">100 / 100</span></div>
+            <div class="em-sig-field"><span class="esf-label">EV Edge</span><span class="esf-val hi">+14.7%</span></div>
+          </div>
+        </div>
+        <div class="em-divider"></div>
+        <div class="em-signal">
+          <div class="em-signal-head">
+            <span class="em-sig-num">02</span>
+            <span class="em-sig-badge">● FINAL SIGNAL</span>
+            <span class="em-sig-sport">NCAAB</span>
+            <span class="em-sig-time">9:00 PM ET</span>
+          </div>
+          <div class="em-signal-grid">
+            <div class="em-sig-field"><span class="esf-label">Game</span><span class="esf-val">Utah St vs Boise St</span></div>
+            <div class="em-sig-field"><span class="esf-label">Bet</span><span class="esf-val hi">Boise State Broncos</span></div>
+            <div class="em-sig-field"><span class="esf-label">Book</span><span class="esf-val">DraftKings</span></div>
+            <div class="em-sig-field"><span class="esf-label">Odds</span><span class="esf-val hi">+310</span></div>
+            <div class="em-sig-field"><span class="esf-label">Clyp Score</span><span class="esf-val hi">84 / 100</span></div>
+            <div class="em-sig-field"><span class="esf-label">EV Edge</span><span class="esf-val hi">+9.2%</span></div>
+          </div>
+        </div>
+        <div class="em-divider"></div>
+        <div class="em-signal">
+          <div class="em-signal-head">
+            <span class="em-sig-num">03</span>
+            <span class="em-sig-badge">● FINAL SIGNAL</span>
+            <span class="em-sig-sport">CBALL</span>
+            <span class="em-sig-time">3:00 PM ET</span>
+          </div>
+          <div class="em-signal-grid">
+            <div class="em-sig-field"><span class="esf-label">Game</span><span class="esf-val">LSU vs Ole Miss</span></div>
+            <div class="em-sig-field"><span class="esf-label">Bet</span><span class="esf-val hi">Ole Miss Rebels</span></div>
+            <div class="em-sig-field"><span class="esf-label">Book</span><span class="esf-val">Bovada</span></div>
+            <div class="em-sig-field"><span class="esf-label">Odds</span><span class="esf-val hi">+185</span></div>
+            <div class="em-sig-field"><span class="esf-label">Clyp Score</span><span class="esf-val hi">71 / 100</span></div>
+            <div class="em-sig-field"><span class="esf-label">EV Edge</span><span class="esf-val hi">+8.1%</span></div>
+          </div>
+        </div>
+        <div class="em-divider"></div>
+        <div class="em-footer-note">
+          Wager sizing scaled to $100k bankroll via Half Kelly · Adjust proportionally to yours<br>
+          All signals timestamped at issuance · Track record updated after results
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PRICING -->
+<section class="data-section reveal" id="membership">
+  <div class="ds-header">
+    <span class="ds-label">04</span>
+    <span class="ds-title">Membership — Full Access</span>
+    <span class="ds-meta">No tiers · No upsells · Cancel anytime</span>
+  </div>
+  <div class="pricing-wrap">
+    <div class="pricing-copy">
+      <h3>One tier.<br><span class="hl">Full access.</span></h3>
+      <p>Members receive the complete service: daily signals, exact wager sizing, full methodology documentation, and an unedited track record. There are no premium tiers, add-ons, or upsells.</p>
+      <p>Cancel at any time before your next billing date. No contracts, no lock-in periods, no penalty fees.</p>
+    </div>
+    <div class="rate-panel">
+      <div class="rp-head">
+        <div class="rp-tier">RRP Tech // Sports Betting Engine</div>
+        <div class="rp-price"><sup>$</sup>9.99</div>
+        <div class="rp-cadence">Per month · Cancel anytime</div>
+      </div>
+      <div class="rp-items">
+        <div class="rp-item"><span class="rp-dot">›</span><span>Daily signal email before games begin — team, book, odds, wager size</span></div>
+        <div class="rp-item"><span class="rp-dot">›</span><span>Only picks confirmed by all 3 systems — high bar, low noise</span></div>
+        <div class="rp-item"><span class="rp-dot">›</span><span>Half Kelly wager included — scale proportionally to your bankroll</span></div>
+        <div class="rp-item"><span class="rp-dot">›</span><span>Full track record updated daily — every pick timestamped before tip-off</span></div>
+        <div class="rp-item"><span class="rp-dot">›</span><span>NCAAB + College Baseball — markets with persistent pricing inefficiency</span></div>
+      </div>
+      <div class="rp-foot">
+        <a href="https://rrptech.gumroad.com/l/tybelc" class="btn-primary" style="display:block;text-align:center;width:100%;">
+          Subscribe Now — $9.99 / Month
+        </a>
+        <p class="rp-disclaimer">Informational purposes only. Not financial advice. Sports betting involves risk and may be illegal in your jurisdiction. Past performance does not guarantee future results.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACK RECORD -->
+<section class="data-section reveal" id="trackrecord">
+  <div class="ds-header">
+    <span class="ds-label">03</span>
+    <span class="ds-title">Track Record — Last 10 Signals</span>
+    <span class="ds-meta" id="tr-updated">Loading...</span>
+  </div>
+  <div class="tr-stats-row" id="tr-stats">
+    <div class="tr-stat"><span class="tr-stat-val" id="tr-total">—</span><span class="tr-stat-label">Total Picks</span></div>
+    <div class="tr-stat"><span class="tr-stat-val green" id="tr-wins">—</span><span class="tr-stat-label">Wins</span></div>
+    <div class="tr-stat"><span class="tr-stat-val red" id="tr-losses">—</span><span class="tr-stat-label">Losses</span></div>
+    <div class="tr-stat"><span class="tr-stat-val amber" id="tr-wr">—</span><span class="tr-stat-label">Win Rate</span></div>
+    <div class="tr-stat"><span class="tr-stat-val" id="tr-roi">—</span><span class="tr-stat-label">ROI</span></div>
+  </div>
+  <div class="tr-table-wrap">
+    <table class="tr-table" id="tr-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Sport</th>
+          <th>Team</th>
+          <th>Book</th>
+          <th>Odds</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody id="tr-body">
+        <tr><td colspan="6" class="tr-loading">Loading track record...</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tr-footer">
+    <span>All picks timestamped before tip-off · Complete unedited record</span>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="data-section reveal" id="faq">
+  <div class="ds-header">
+    <span class="ds-label">05</span>
+    <span class="ds-title">FAQ — Frequently Asked Questions</span>
+  </div>
+  <div style="padding: 0 0 0 0;">
+    <table class="faq-table">
+      <tbody>
+        <tr>
+          <td>How are signals delivered to members?</td>
+          <td>Every morning via email before the first game tips off. Each signal specifies team, sportsbook, odds, and a Half Kelly wager scaled to a $100,000 reference bankroll. Divide proportionally for your own stake.</td>
+        </tr>
+        <tr>
+          <td>Which sportsbooks do I need?</td>
+          <td>FanDuel and DraftKings cover the majority of signals. Bovada and BetRivers are useful additions. Every signal specifies the exact book with the best line — no manual shopping required.</td>
+        </tr>
+        <tr>
+          <td>How is this different from a tout service?</td>
+          <td>Every pick is timestamped at issuance. Results are logged in full. Nothing is edited or removed after the fact. The track record visible to members is the complete and unaltered record — every signal, every outcome.</td>
+        </tr>
+        <tr>
+          <td>What does "all 3 systems confirmed" mean?</td>
+          <td>A signal must clear three independent thresholds: Clyp Score ≥ 60, win probability above implied per the Logistic Regression, and win probability above implied per the Random Forest. Most opportunities fail at least one gate.</td>
+        </tr>
+        <tr>
+          <td>What sports and markets are covered?</td>
+          <td>Currently NCAAB and College Baseball — markets where mid-major pricing demonstrably lags sharp consensus. Additional markets are added only when the models validate consistent, measurable edge over sufficient sample size.</td>
+        </tr>
+        <tr>
+          <td>Can I cancel at any time?</td>
+          <td>Yes. Cancel before your next billing date and no further charges apply. No lock-in periods, no cancellation fees, no minimum commitment.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-left">
+    <span class="footer-logo">RRP Tech</span>
+    <span class="footer-version">Sports Betting Engine</span>
+  </div>
+  <div class="footer-right">
+    Informational purposes only · Not financial advice<br>
+    Gambling may be illegal in your jurisdiction · Wager responsibly
+  </div>
+</footer>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  function drawChart(data) {
+    const canvas = document.getElementById('bankrollChart');
+    if (!canvas || !data || data.length < 2) return;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.offsetWidth || 800;
+    const H = 180;
+    canvas.width = W;
+    canvas.height = H;
+    const pad = { top: 20, right: 20, bottom: 10, left: 20 };
+    const minV = Math.min.apply(null, data) * 0.98;
+    const maxV = Math.max.apply(null, data) * 1.02;
+    function xPos(i) { return pad.left + (i / (data.length - 1)) * (W - pad.left - pad.right); }
+    function yPos(v) { return pad.top + (1 - (v - minV) / (maxV - minV)) * (H - pad.top - pad.bottom); }
+    var grad = ctx.createLinearGradient(0, pad.top, 0, H);
+    grad.addColorStop(0, 'rgba(232,160,32,0.18)');
+    grad.addColorStop(1, 'rgba(232,160,32,0)');
+    ctx.beginPath();
+    ctx.moveTo(xPos(0), H);
+    ctx.lineTo(xPos(0), yPos(data[0]));
+    data.forEach(function(v, i) { if (i > 0) ctx.lineTo(xPos(i), yPos(v)); });
+    ctx.lineTo(xPos(data.length - 1), H);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(xPos(0), yPos(data[0]));
+    data.forEach(function(v, i) { if (i > 0) ctx.lineTo(xPos(i), yPos(v)); });
+    ctx.strokeStyle = '#E8A020';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.setLineDash([4, 4]);
+    ctx.moveTo(pad.left, yPos(100000));
+    ctx.lineTo(W - pad.right, yPos(100000));
+    ctx.strokeStyle = 'rgba(106,114,128,0.4)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.setLineDash([]);
+    var peakIdx = data.indexOf(Math.max.apply(null, data));
+    ctx.beginPath();
+    ctx.arc(xPos(peakIdx), yPos(data[peakIdx]), 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#E8A020';
+    ctx.fill();
+    ctx.font = '9px IBM Plex Mono';
+    ctx.fillStyle = 'rgba(106,114,128,0.6)';
+    ctx.fillText('$100k baseline', pad.left + 4, yPos(100000) - 4);
+  }
+
+  function renderTrackRecord(bets) {
+    var tbody = document.getElementById('tr-body');
+    if (!tbody) return;
+    if (!bets || bets.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" class="tr-loading">No completed bets yet</td></tr>';
+      return;
+    }
+    var rows = '';
+    bets.forEach(function(b) {
+      var isW = b.result === 'W';
+      var isL = b.result === 'L';
+      var cls = isW ? 'td-win' : isL ? 'td-loss' : 'td-pending';
+      var lbl = isW ? 'WIN ✓' : isL ? 'LOSS' : 'PENDING';
+      rows += '<tr>';
+      rows += '<td>' + b.date + '</td>';
+      rows += '<td>' + b.sport + '</td>';
+      rows += '<td>' + b.team + '</td>';
+      rows += '<td>' + b.book + '</td>';
+      rows += '<td class="td-odds">' + b.odds + '</td>';
+      rows += '<td class="' + cls + '">' + lbl + '</td>';
+      rows += '</tr>';
+    });
+    tbody.innerHTML = rows;
+  }
+
+  function renderStats(s) {
+    if (!s) return;
+    var els = {
+      'tr-total':   s.total,
+      'tr-wins':    s.wins,
+      'tr-losses':  s.losses,
+      'tr-wr':      s.win_rate + '%',
+      'tr-updated': 'Updated: ' + s.updated,
+      'peak-label': 'Peak: $' + (s.peak || 0).toLocaleString()
+    };
+    Object.keys(els).forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = els[id];
+    });
+    var roiEl = document.getElementById('tr-roi');
+    if (roiEl && s.roi !== undefined) {
+      roiEl.textContent = (s.roi >= 0 ? '+' : '') + s.roi + '%';
+      roiEl.className = 'tr-stat-val ' + (s.roi >= 0 ? 'green' : 'red');
+    }
+  }
+
+  var LIVE_DATA = {"generated": "03/09/26 Live", "stats": {"total": 227, "wins": 50, "losses": 177, "win_rate": 22.0, "peak": 165059.07, "current": 156999.17, "roi": 57.0}, "bankroll_curve": [{"date": "2025-12-31", "value": 100000}, {"date": "2025-12-31", "value": 98639.81}, {"date": "2025-12-31", "value": 96547.03}, {"date": "2026-01-01", "value": 100310.47}, {"date": "2026-01-01", "value": 108063.63}, {"date": "2026-01-01", "value": 103943.66}, {"date": "2026-01-01", "value": 107707.1}, {"date": "2026-01-02", "value": 106241.5}, {"date": "2026-01-03", "value": 109036.53}, {"date": "2026-01-10", "value": 107361.18}, {"date": "2026-01-10", "value": 114504.04}, {"date": "2026-01-11", "value": 112232.46}, {"date": "2026-01-18", "value": 117703.6}, {"date": "2026-01-18", "value": 121018.52}, {"date": "2026-01-20", "value": 119105.25}, {"date": "2026-01-20", "value": 116657.27}, {"date": "2026-01-21", "value": 119724.75}, {"date": "2026-01-22", "value": 118513.51}, {"date": "2026-01-24", "value": 117908.78}, {"date": "2026-01-24", "value": 126287.93}, {"date": "2026-01-24", "value": 125791.67}, {"date": "2026-01-25", "value": 125350.64}, {"date": "2026-01-25", "value": 130038.13}, {"date": "2026-01-25", "value": 129236.92}, {"date": "2026-01-27", "value": 128297.34}, {"date": "2026-01-27", "value": 127441.18}, {"date": "2026-01-27", "value": 126749.26}, {"date": "2026-01-28", "value": 121487.11}, {"date": "2026-01-28", "value": 119931.01}, {"date": "2026-01-29", "value": 122650.67}, {"date": "2026-01-29", "value": 125135.14}, {"date": "2026-01-29", "value": 122380.32}, {"date": "2026-01-30", "value": 127745.6}, {"date": "2026-01-30", "value": 127321.87}, {"date": "2026-01-30", "value": 125552.41}, {"date": "2026-01-30", "value": 123980.08}, {"date": "2026-01-30", "value": 117491.84}, {"date": "2026-01-30", "value": 121189.01}, {"date": "2026-01-31", "value": 117216.38}, {"date": "2026-01-31", "value": 123362.04}, {"date": "2026-01-31", "value": 122941.46}, {"date": "2026-01-31", "value": 122272.13}, {"date": "2026-01-31", "value": 121708.54}, {"date": "2026-01-31", "value": 120732.85}, {"date": "2026-01-31", "value": 119907.21}, {"date": "2026-02-01", "value": 117894.33}, {"date": "2026-02-01", "value": 116301.02}, {"date": "2026-02-01", "value": 114973.86}, {"date": "2026-02-01", "value": 112118.92}, {"date": "2026-02-01", "value": 118328.78}, {"date": "2026-02-01", "value": 117881.35}, {"date": "2026-02-02", "value": 117269.05}, {"date": "2026-02-04", "value": 115807.06}, {"date": "2026-02-05", "value": 115303.77}, {"date": "2026-02-05", "value": 114227.09}, {"date": "2026-02-05", "value": 113204.55}, {"date": "2026-02-05", "value": 112093.44}, {"date": "2026-02-05", "value": 111717.92}, {"date": "2026-02-05", "value": 121140.72}, {"date": "2026-02-06", "value": 120292.22}, {"date": "2026-02-06", "value": 119420.43}, {"date": "2026-02-06", "value": 118637.79}, {"date": "2026-02-06", "value": 117390.09}, {"date": "2026-02-06", "value": 116899.03}, {"date": "2026-02-07", "value": 116049.29}, {"date": "2026-02-07", "value": 117299.29}, {"date": "2026-02-07", "value": 118549.29}, {"date": "2026-02-07", "value": 117785.57}, {"date": "2026-02-07", "value": 116847.72}, {"date": "2026-02-07", "value": 115391.15}, {"date": "2026-02-07", "value": 114686.71}, {"date": "2026-02-07", "value": 114254.29}, {"date": "2026-02-07", "value": 113821.87}, {"date": "2026-02-07", "value": 112442.06}, {"date": "2026-02-07", "value": 115181.79}, {"date": "2026-02-07", "value": 113749.02}, {"date": "2026-02-07", "value": 121441.32}, {"date": "2026-02-07", "value": 120833.3}, {"date": "2026-02-07", "value": 119376.42}, {"date": "2026-02-07", "value": 118585.19}, {"date": "2026-02-07", "value": 118138.0}, {"date": "2026-02-07", "value": 123386.6}, {"date": "2026-02-08", "value": 121942.44}, {"date": "2026-02-08", "value": 121298.02}, {"date": "2026-02-08", "value": 126677.77}, {"date": "2026-02-10", "value": 126181.51}, {"date": "2026-02-10", "value": 131402.41}, {"date": "2026-02-11", "value": 133611.24}, {"date": "2026-02-11", "value": 130127.96}, {"date": "2026-02-11", "value": 129423.61}, {"date": "2026-02-11", "value": 128918.55}, {"date": "2026-02-11", "value": 128310.24}, {"date": "2026-02-11", "value": 127762.77}, {"date": "2026-02-11", "value": 127249.43}, {"date": "2026-02-11", "value": 126508.69}, {"date": "2026-02-11", "value": 125561.72}, {"date": "2026-02-13", "value": 124958.65}, {"date": "2026-02-13", "value": 123943.11}, {"date": "2026-02-13", "value": 119911.87}, {"date": "2026-02-13", "value": 119201.44}, {"date": "2026-02-14", "value": 118725.25}, {"date": "2026-02-14", "value": 117881.93}, {"date": "2026-02-14", "value": 117172.49}, {"date": "2026-02-14", "value": 116486.14}, {"date": "2026-02-14", "value": 119145.71}, {"date": "2026-02-14", "value": 118567.13}, {"date": "2026-02-15", "value": 117820.86}, {"date": "2026-02-15", "value": 120384.96}, {"date": "2026-02-15", "value": 122718.29}, {"date": "2026-02-15", "value": 118985.31}, {"date": "2026-02-15", "value": 123499.2}, {"date": "2026-02-15", "value": 120712.13}, {"date": "2026-02-15", "value": 122101.02}, {"date": "2026-02-16", "value": 125355.46}, {"date": "2026-02-17", "value": 124996.85}, {"date": "2026-02-17", "value": 124638.24}, {"date": "2026-02-18", "value": 124000.31}, {"date": "2026-02-18", "value": 127640.16}, {"date": "2026-02-19", "value": 125558.14}, {"date": "2026-02-19", "value": 129445.06}, {"date": "2026-02-19", "value": 127709.36}, {"date": "2026-02-19", "value": 133534.59}, {"date": "2026-02-19", "value": 141312.39}, {"date": "2026-02-19", "value": 140064.23}, {"date": "2026-02-19", "value": 139027.47}, {"date": "2026-02-20", "value": 138403.35}, {"date": "2026-02-20", "value": 136706.52}, {"date": "2026-02-20", "value": 135066.41}, {"date": "2026-02-20", "value": 133959.6}, {"date": "2026-02-20", "value": 137869.07}, {"date": "2026-02-20", "value": 136819.35}, {"date": "2026-02-21", "value": 136423.08}, {"date": "2026-02-21", "value": 135856.28}, {"date": "2026-02-21", "value": 135165.67}, {"date": "2026-02-21", "value": 134541.45}, {"date": "2026-02-21", "value": 133997.18}, {"date": "2026-02-21", "value": 133322.97}, {"date": "2026-02-22", "value": 132038.32}, {"date": "2026-02-25", "value": 131382.57}, {"date": "2026-02-25", "value": 138281.56}, {"date": "2026-02-25", "value": 136129.66}, {"date": "2026-02-25", "value": 135682.6}, {"date": "2026-02-25", "value": 139069.06}, {"date": "2026-02-25", "value": 138399.84}, {"date": "2026-02-26", "value": 137853.97}, {"date": "2026-02-26", "value": 137363.3}, {"date": "2026-02-26", "value": 136766.01}, {"date": "2026-02-26", "value": 136022.75}, {"date": "2026-02-27", "value": 134100.96}, {"date": "2026-02-27", "value": 133606.12}, {"date": "2026-02-27", "value": 132650.65}, {"date": "2026-02-28", "value": 132206.84}, {"date": "2026-02-28", "value": 131272.98}, {"date": "2026-02-28", "value": 130678.9}, {"date": "2026-02-28", "value": 130188.7}, {"date": "2026-02-28", "value": 127941.67}, {"date": "2026-02-28", "value": 133766.91}, {"date": "2026-02-28", "value": 132026.24}, {"date": "2026-02-28", "value": 130524.47}, {"date": "2026-02-28", "value": 129939.42}, {"date": "2026-02-28", "value": 129319.55}, {"date": "2026-02-28", "value": 129057.23}, {"date": "2026-02-28", "value": 124558.8}, {"date": "2026-02-28", "value": 124296.48}, {"date": "2026-02-28", "value": 127461.04}, {"date": "2026-02-28", "value": 126322.02}, {"date": "2026-02-28", "value": 124787.53}, {"date": "2026-02-28", "value": 134089.83}, {"date": "2026-03-01", "value": 132909.58}, {"date": "2026-03-01", "value": 132349.66}, {"date": "2026-03-01", "value": 130811.11}, {"date": "2026-03-01", "value": 125916.01}, {"date": "2026-03-01", "value": 125218.63}, {"date": "2026-03-01", "value": 124651.83}, {"date": "2026-03-03", "value": 124255.56}, {"date": "2026-03-04", "value": 123329.63}, {"date": "2026-03-04", "value": 122688.6}, {"date": "2026-03-04", "value": 121762.19}, {"date": "2026-03-04", "value": 121354.26}, {"date": "2026-03-04", "value": 120946.33}, {"date": "2026-03-04", "value": 120502.52}, {"date": "2026-03-04", "value": 120046.02}, {"date": "2026-03-05", "value": 113635.76}, {"date": "2026-03-05", "value": 112545.18}, {"date": "2026-03-05", "value": 111810.34}, {"date": "2026-03-06", "value": 110241.71}, {"date": "2026-03-06", "value": 109624.43}, {"date": "2026-03-06", "value": 108759.05}, {"date": "2026-03-06", "value": 106746.47}, {"date": "2026-03-06", "value": 106149.18}, {"date": "2026-03-07", "value": 105238.34}, {"date": "2026-03-07", "value": 104311.71}, {"date": "2026-03-07", "value": 103472.69}, {"date": "2026-03-07", "value": 102427.67}, {"date": "2026-03-07", "value": 98834.43}, {"date": "2026-03-07", "value": 107507.88}, {"date": "2026-03-07", "value": 106885.72}, {"date": "2026-03-07", "value": 106267.72}, {"date": "2026-03-07", "value": 105804.76}, {"date": "2026-03-07", "value": 105341.8}, {"date": "2026-03-08", "value": 103695.4}, {"date": "2026-03-08", "value": 101630.82}, {"date": "2026-03-08", "value": 100498.42}, {"date": "2026-03-08", "value": 99125.29}, {"date": "2026-03-08", "value": 97992.89}, {"date": "2026-03-08", "value": 96321.06}, {"date": "2026-03-08", "value": 95617.84}, {"date": "2026-03-08", "value": 93401.2}, {"date": "2026-03-08", "value": 80529.79}, {"date": "2026-03-08", "value": 75130.6}, {"date": "2026-03-08", "value": 67132.59}, {"date": "2026-03-08", "value": 77484.76}, {"date": "2026-03-08", "value": 72996.96}, {"date": "2026-03-08", "value": 92208.59}, {"date": "2026-03-08", "value": 115410.39}, {"date": "2026-03-08", "value": 112215.89}, {"date": "2026-03-08", "value": 108507.37}, {"date": "2026-03-08", "value": 100319.98}, {"date": "2026-03-08", "value": 114108.3}, {"date": "2026-03-08", "value": 109384.54}, {"date": "2026-03-08", "value": 118289.65}, {"date": "2026-03-08", "value": 117078.82}, {"date": "2026-03-08", "value": 135961.21}, {"date": "2026-03-08", "value": 152383.12}, {"date": "2026-03-08", "value": 165059.07}, {"date": "2026-03-08", "value": 160076.34}, {"date": "2026-03-08", "value": 158088.03}, {"date": "2026-03-09", "value": 156999.17}], "last_10_bets": [{"date": "03/09/26", "team": "North Dakota Fighting Hawks", "book": "LowVig.ag", "odds": "+476", "sport": "NCAAB", "result": "L"}, {"date": "03/08/26", "team": "Loyola Marymount Lions", "book": "Bovada", "odds": "+700", "sport": "CBALL", "result": "L"}, {"date": "03/08/26", "team": "Western Carolina Catamounts", "book": "LowVig.ag", "odds": "+140", "sport": "NCAAB", "result": "L"}, {"date": "03/08/26", "team": "East Tennessee St Buccaneers", "book": "FanDuel", "odds": "+122", "sport": "NCAAB", "result": "W"}, {"date": "03/08/26", "team": "CSU Northridge Matadors", "book": "FanDuel", "odds": "+459", "sport": "CBALL", "result": "W"}, {"date": "03/08/26", "team": "Northern Kentucky Norse", "book": "FanDuel", "odds": "+124", "sport": "NCAAB", "result": "W"}, {"date": "03/08/26", "team": "Maryland Terrapins", "book": "BetRivers", "odds": "+650", "sport": "NCAAB", "result": "L"}, {"date": "03/08/26", "team": "Monmouth Hawks", "book": "Bovada", "odds": "+110", "sport": "NCAAB", "result": "W"}, {"date": "03/08/26", "team": "Drexel Dragons", "book": "FanDuel", "odds": "+125", "sport": "NCAAB", "result": "L"}, {"date": "03/08/26", "team": "UAB Blazers", "book": "DraftKings", "odds": "+135", "sport": "NCAAB", "result": "W"}]};
+  var FALLBACK_CURVE = [100000,97800,94200,103200,112000,119200,125800,134500,141312,133400,123600,114200,103200,94800,85400];
+
+  // Load embedded live data directly
+  function loadData(d) {
+    var curve = d.bankroll_curve ? d.bankroll_curve.map(function(p) { return p.value; }) : FALLBACK_CURVE;
+    drawChart(curve);
+    if (d.stats) { d.stats.updated = d.generated || ''; renderStats(d.stats); }
+    if (d.last_10_bets) renderTrackR
