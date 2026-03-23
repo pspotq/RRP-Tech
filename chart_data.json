@@ -1,13 +1,13 @@
 {
-  "generated": "2026-03-20 06:55",
+  "generated": "2026-03-23 08:10",
   "stats": {
-    "total": 257,
+    "total": 264,
     "wins": 57,
-    "losses": 200,
-    "win_rate": 22.2,
+    "losses": 207,
+    "win_rate": 21.6,
     "peak": 165439.24,
-    "current": 162425.66,
-    "roi": 62.4
+    "current": 156152.86,
+    "roi": 56.2
   },
   "bankroll_curve": [
     {
@@ -128,7 +128,7 @@
     },
     {
       "date": "2026-01-29",
-      "value": 122415.48
+      "value": 122650.67
     },
     {
       "date": "2026-01-29",
@@ -196,11 +196,11 @@
     },
     {
       "date": "2026-02-01",
-      "value": 115039.39
+      "value": 116301.02
     },
     {
       "date": "2026-02-01",
-      "value": 113446.08
+      "value": 114973.86
     },
     {
       "date": "2026-02-01",
@@ -252,7 +252,7 @@
     },
     {
       "date": "2026-02-06",
-      "value": 119420.43
+      "value": 119509.58
     },
     {
       "date": "2026-02-06",
@@ -332,7 +332,7 @@
     },
     {
       "date": "2026-02-07",
-      "value": 118138.0
+      "value": 123833.79
     },
     {
       "date": "2026-02-07",
@@ -368,15 +368,15 @@
     },
     {
       "date": "2026-02-11",
-      "value": 129622.9
+      "value": 129614.62
     },
     {
       "date": "2026-02-11",
-      "value": 129075.43
+      "value": 129109.56
     },
     {
       "date": "2026-02-11",
-      "value": 128371.08
+      "value": 128562.09
     },
     {
       "date": "2026-02-11",
@@ -396,7 +396,7 @@
     },
     {
       "date": "2026-02-13",
-      "value": 124546.18
+      "value": 124958.65
     },
     {
       "date": "2026-02-13",
@@ -452,11 +452,11 @@
     },
     {
       "date": "2026-02-15",
-      "value": 116198.24
+      "value": 123499.2
     },
     {
       "date": "2026-02-15",
-      "value": 120712.13
+      "value": 124888.09
     },
     {
       "date": "2026-02-15",
@@ -512,7 +512,7 @@
     },
     {
       "date": "2026-02-20",
-      "value": 137330.64
+      "value": 138403.35
     },
     {
       "date": "2026-02-20",
@@ -540,7 +540,7 @@
     },
     {
       "date": "2026-02-21",
-      "value": 135732.47
+      "value": 135856.28
     },
     {
       "date": "2026-02-21",
@@ -588,7 +588,7 @@
     },
     {
       "date": "2026-02-26",
-      "value": 137909.17
+      "value": 137853.97
     },
     {
       "date": "2026-02-26",
@@ -652,15 +652,15 @@
     },
     {
       "date": "2026-02-28",
-      "value": 129319.55
+      "value": 129677.1
     },
     {
       "date": "2026-02-28",
-      "value": 129057.23
+      "value": 129414.78
     },
     {
       "date": "2026-02-28",
-      "value": 124558.8
+      "value": 124916.35
     },
     {
       "date": "2026-02-28",
@@ -712,11 +712,11 @@
     },
     {
       "date": "2026-03-04",
-      "value": 123329.63
+      "value": 123329.15
     },
     {
       "date": "2026-03-04",
-      "value": 122688.6
+      "value": 122688.12
     },
     {
       "date": "2026-03-04",
@@ -792,11 +792,11 @@
     },
     {
       "date": "2026-03-07",
-      "value": 98212.27
+      "value": 98216.43
     },
     {
       "date": "2026-03-07",
-      "value": 106885.72
+      "value": 106889.88
     },
     {
       "date": "2026-03-07",
@@ -844,7 +844,7 @@
     },
     {
       "date": "2026-03-08",
-      "value": 80529.79
+      "value": 88002.01
     },
     {
       "date": "2026-03-08",
@@ -852,7 +852,7 @@
     },
     {
       "date": "2026-03-08",
-      "value": 67132.59
+      "value": 85482.77
     },
     {
       "date": "2026-03-08",
@@ -908,7 +908,7 @@
     },
     {
       "date": "2026-03-08",
-      "value": 147400.39
+      "value": 165059.07
     },
     {
       "date": "2026-03-08",
@@ -1041,9 +1041,93 @@
     {
       "date": "2026-03-20",
       "value": 162425.66
+    },
+    {
+      "date": "2026-03-20",
+      "value": 161868.27
+    },
+    {
+      "date": "2026-03-20",
+      "value": 160885.89
+    },
+    {
+      "date": "2026-03-20",
+      "value": 159687.91
+    },
+    {
+      "date": "2026-03-21",
+      "value": 158738.01
+    },
+    {
+      "date": "2026-03-21",
+      "value": 158008.14
+    },
+    {
+      "date": "2026-03-21",
+      "value": 157104.11
+    },
+    {
+      "date": "2026-03-22",
+      "value": 156152.86
     }
   ],
   "last_10_bets": [
+    {
+      "date": "03/22/26",
+      "team": "Seattle Redhawks",
+      "book": "Bovada",
+      "odds": "+725",
+      "sport": "NCAAB",
+      "result": "L"
+    },
+    {
+      "date": "03/21/26",
+      "team": "Saint Louis Billikens",
+      "book": "FanDuel",
+      "odds": "+680",
+      "sport": "NCAAB",
+      "result": "L"
+    },
+    {
+      "date": "03/21/26",
+      "team": "Furman Paladins",
+      "book": "FanDuel",
+      "odds": "+2000",
+      "sport": "NCAAB",
+      "result": "L"
+    },
+    {
+      "date": "03/21/26",
+      "team": "Cal Baptist Lancers",
+      "book": "FanDuel",
+      "odds": "+890",
+      "sport": "NCAAB",
+      "result": "L"
+    },
+    {
+      "date": "03/20/26",
+      "team": "Northern Iowa Panthers",
+      "book": "Bovada",
+      "odds": "+525",
+      "sport": "NCAAB",
+      "result": "L"
+    },
+    {
+      "date": "03/20/26",
+      "team": "Hofstra Pride",
+      "book": "Bovada",
+      "odds": "+750",
+      "sport": "NCAAB",
+      "result": "L"
+    },
+    {
+      "date": "03/20/26",
+      "team": "Wright St Raiders",
+      "book": "FanDuel",
+      "odds": "+1400",
+      "sport": "NCAAB",
+      "result": "L"
+    },
     {
       "date": "03/20/26",
       "team": "Kennesaw St Owls",
@@ -1065,62 +1149,6 @@
       "team": "North Dakota St Bison",
       "book": "FanDuel",
       "odds": "+1200",
-      "sport": "NCAAB",
-      "result": "L"
-    },
-    {
-      "date": "03/19/26",
-      "team": "McNeese Cowboys",
-      "book": "FanDuel",
-      "odds": "+530",
-      "sport": "NCAAB",
-      "result": "L"
-    },
-    {
-      "date": "03/19/26",
-      "team": "High Point Panthers",
-      "book": "Bovada",
-      "odds": "+425",
-      "sport": "NCAAB",
-      "result": "W"
-    },
-    {
-      "date": "03/19/26",
-      "team": "Troy Trojans",
-      "book": "FanDuel",
-      "odds": "+740",
-      "sport": "NCAAB",
-      "result": "L"
-    },
-    {
-      "date": "03/18/26",
-      "team": "Navy Midshipmen",
-      "book": "BetMGM",
-      "odds": "+600",
-      "sport": "NCAAB",
-      "result": "L"
-    },
-    {
-      "date": "03/18/26",
-      "team": "South Alabama Jaguars",
-      "book": "FanDuel",
-      "odds": "+1280",
-      "sport": "NCAAB",
-      "result": "L"
-    },
-    {
-      "date": "03/14/26",
-      "team": "Wisconsin Badgers",
-      "book": "FanDuel",
-      "odds": "+640",
-      "sport": "NCAAB",
-      "result": "L"
-    },
-    {
-      "date": "03/14/26",
-      "team": "Oklahoma Sooners",
-      "book": "Bovada",
-      "odds": "+260",
       "sport": "NCAAB",
       "result": "L"
     }
