@@ -1,13 +1,13 @@
 {
-  "generated": "2026-04-25 11:40",
+  "generated": "2026-04-29 07:14",
   "stats": {
-    "total": 301,
-    "wins": 74,
-    "losses": 227,
-    "win_rate": 24.6,
-    "peak": 192394.47,
-    "current": 191924.31,
-    "roi": 91.9
+    "total": 310,
+    "wins": 80,
+    "losses": 230,
+    "win_rate": 25.8,
+    "peak": 206710.53,
+    "current": 206710.53,
+    "roi": 106.7
   },
   "bankroll_curve": [
     {
@@ -156,7 +156,7 @@
     },
     {
       "date": "2026-01-30",
-      "value": 117491.84
+      "value": 127677.25
     },
     {
       "date": "2026-01-30",
@@ -224,11 +224,11 @@
     },
     {
       "date": "2026-02-05",
-      "value": 115303.77
+      "value": 114784.52
     },
     {
       "date": "2026-02-05",
-      "value": 114281.23
+      "value": 113707.84
     },
     {
       "date": "2026-02-05",
@@ -288,7 +288,7 @@
     },
     {
       "date": "2026-02-07",
-      "value": 115391.15
+      "value": 116143.28
     },
     {
       "date": "2026-02-07",
@@ -308,7 +308,7 @@
     },
     {
       "date": "2026-02-07",
-      "value": 111009.29
+      "value": 115181.79
     },
     {
       "date": "2026-02-07",
@@ -368,19 +368,19 @@
     },
     {
       "date": "2026-02-11",
-      "value": 129614.62
+      "value": 129423.61
     },
     {
       "date": "2026-02-11",
-      "value": 129067.15
+      "value": 128918.55
     },
     {
       "date": "2026-02-11",
-      "value": 128562.09
+      "value": 128310.24
     },
     {
       "date": "2026-02-11",
-      "value": 127953.78
+      "value": 127796.9
     },
     {
       "date": "2026-02-11",
@@ -452,11 +452,11 @@
     },
     {
       "date": "2026-02-15",
-      "value": 120374.2
+      "value": 116198.24
     },
     {
       "date": "2026-02-15",
-      "value": 117587.13
+      "value": 120712.13
     },
     {
       "date": "2026-02-15",
@@ -484,15 +484,15 @@
     },
     {
       "date": "2026-02-19",
-      "value": 125904.46
+      "value": 133465.39
     },
     {
       "date": "2026-02-19",
-      "value": 123822.44
+      "value": 137352.31
     },
     {
       "date": "2026-02-19",
-      "value": 127709.36
+      "value": 135616.61
     },
     {
       "date": "2026-02-19",
@@ -520,7 +520,7 @@
     },
     {
       "date": "2026-02-20",
-      "value": 135066.41
+      "value": 135599.71
     },
     {
       "date": "2026-02-20",
@@ -568,7 +568,7 @@
     },
     {
       "date": "2026-02-25",
-      "value": 129230.67
+      "value": 138281.56
     },
     {
       "date": "2026-02-25",
@@ -616,7 +616,7 @@
     },
     {
       "date": "2026-02-28",
-      "value": 131716.79
+      "value": 132206.84
     },
     {
       "date": "2026-02-28",
@@ -688,15 +688,15 @@
     },
     {
       "date": "2026-03-01",
-      "value": 128014.48
+      "value": 132349.66
     },
     {
       "date": "2026-03-01",
-      "value": 126475.93
+      "value": 130811.11
     },
     {
       "date": "2026-03-01",
-      "value": 125778.55
+      "value": 130113.73
     },
     {
       "date": "2026-03-01",
@@ -876,11 +876,11 @@
     },
     {
       "date": "2026-03-08",
-      "value": 126004.21
+      "value": 104028.5
     },
     {
       "date": "2026-03-08",
-      "value": 122295.69
+      "value": 117816.82
     },
     {
       "date": "2026-03-08",
@@ -908,7 +908,7 @@
     },
     {
       "date": "2026-03-08",
-      "value": 165059.07
+      "value": 147400.39
     },
     {
       "date": "2026-03-08",
@@ -1096,7 +1096,7 @@
     },
     {
       "date": "2026-03-28",
-      "value": 151162.98
+      "value": 156734.08
     },
     {
       "date": "2026-03-28",
@@ -1116,7 +1116,7 @@
     },
     {
       "date": "2026-03-28",
-      "value": 170591.06
+      "value": 165057.78
     },
     {
       "date": "2026-03-28",
@@ -1217,86 +1217,122 @@
     {
       "date": "2026-04-23",
       "value": 191924.31
+    },
+    {
+      "date": "2026-04-25",
+      "value": 189311.07
+    },
+    {
+      "date": "2026-04-25",
+      "value": 193210.74
+    },
+    {
+      "date": "2026-04-25",
+      "value": 188079.93
+    },
+    {
+      "date": "2026-04-25",
+      "value": 191853.15
+    },
+    {
+      "date": "2026-04-25",
+      "value": 195950.19
+    },
+    {
+      "date": "2026-04-25",
+      "value": 200981.41
+    },
+    {
+      "date": "2026-04-25",
+      "value": 205185.28
+    },
+    {
+      "date": "2026-04-25",
+      "value": 202224.12
+    },
+    {
+      "date": "2026-04-25",
+      "value": 206710.53
     }
   ],
   "last_10_bets": [
+    {
+      "date": "04/25/26",
+      "team": "Under",
+      "book": "DraftKings",
+      "odds": "-114",
+      "sport": "CBALL",
+      "result": "W"
+    },
+    {
+      "date": "04/25/26",
+      "team": "Under",
+      "book": "BetUS",
+      "odds": "+120",
+      "sport": "CBALL",
+      "result": "L"
+    },
+    {
+      "date": "04/25/26",
+      "team": "Under",
+      "book": "BetMGM",
+      "odds": "-114",
+      "sport": "CBALL",
+      "result": "W"
+    },
+    {
+      "date": "04/25/26",
+      "team": "Over",
+      "book": "MyBookie.ag",
+      "odds": "-108",
+      "sport": "CBALL",
+      "result": "W"
+    },
+    {
+      "date": "04/25/26",
+      "team": "Texas Tech Red Raiders +1.5",
+      "book": "FanDuel",
+      "odds": "-101",
+      "sport": "CBALL",
+      "result": "W"
+    },
+    {
+      "date": "04/25/26",
+      "team": "Over",
+      "book": "MyBookie.ag",
+      "odds": "+100",
+      "sport": "CBALL",
+      "result": "W"
+    },
+    {
+      "date": "04/25/26",
+      "team": "Under",
+      "book": "BetRivers",
+      "odds": "-120",
+      "sport": "CBALL",
+      "result": "L"
+    },
+    {
+      "date": "04/25/26",
+      "team": "Over",
+      "book": "Bovada",
+      "odds": "-114",
+      "sport": "CBALL",
+      "result": "W"
+    },
+    {
+      "date": "04/25/26",
+      "team": "Wake Forest Demon Deacons",
+      "book": "BetMGM",
+      "odds": "+220",
+      "sport": "CBALL",
+      "result": "L"
+    },
     {
       "date": "04/23/26",
       "team": "Phoenix Suns",
       "book": "LowVig.ag",
       "odds": "+1092",
-      "sport": "NBA",
-      "result": "L"
-    },
-    {
-      "date": "04/22/26",
-      "team": "New York Yankees -1.5",
-      "book": "BetMGM",
-      "odds": "+135",
-      "sport": "MLB",
-      "result": "W"
-    },
-    {
-      "date": "04/21/26",
-      "team": "Philadelphia 76ers",
-      "book": "FanDuel",
-      "odds": "+700",
-      "sport": "NBA",
-      "result": "W"
-    },
-    {
-      "date": "04/20/26",
-      "team": "Under",
-      "book": "BetRivers",
-      "odds": "-108",
-      "sport": "MLB",
-      "result": "L"
-    },
-    {
-      "date": "04/19/26",
-      "team": "Athletics -1.5",
-      "book": "BetMGM",
-      "odds": "+145",
-      "sport": "MLB",
-      "result": "L"
-    },
-    {
-      "date": "04/19/26",
-      "team": "New York Yankees -1.5",
-      "book": "BetMGM",
-      "odds": "+150",
-      "sport": "MLB",
-      "result": "W"
-    },
-    {
-      "date": "04/17/26",
-      "team": "Over",
-      "book": "BetMGM",
-      "odds": "+100",
-      "sport": "MLB",
-      "result": "L"
-    },
-    {
-      "date": "04/17/26",
-      "team": "Chicago Cubs -1.5",
-      "book": "MyBookie.ag",
-      "odds": "+136",
-      "sport": "MLB",
-      "result": "W"
-    },
-    {
-      "date": "04/15/26",
-      "team": "Under",
-      "book": "LowVig.ag",
-      "odds": "+104",
-      "sport": "MLB",
-      "result": "W"
-    },
-    {
-      "date": "04/15/26",
-      "team": "Phoenix Suns",
-      "book": "BetRivers",
-      "odds": "-141",
       "sport": "NBA",
       "result": "L"
     }
